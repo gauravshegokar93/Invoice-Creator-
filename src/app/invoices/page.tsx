@@ -7,6 +7,12 @@ import Link from 'next/link';
 import { format } from 'date-fns';
 import type { Invoice } from '@/lib/types';
 import { formatAmount } from '@/lib/utils';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'My Invoices | InvoiceFlow',
+  description: 'View, manage, and edit all your saved invoices in one place.',
+};
 
 function calculateGrandTotal(invoice: Invoice) {
     const subtotal = invoice.lineItems.reduce((acc, item) => acc + item.quantity * item.rate, 0);

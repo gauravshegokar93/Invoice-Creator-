@@ -4,8 +4,9 @@ import { Toaster } from "@/components/ui/toaster"
 import { AppHeader } from '@/components/app-header';
 
 export const metadata: Metadata = {
-  title: 'InvoiceFlow',
-  description: 'Create, preview, and download professional invoices.',
+  title: 'InvoiceFlow | Free & Simple Invoice Generator',
+  description: 'Create, preview, and download professional invoices for free. The perfect invoice maker for freelancers and small businesses. Generate and download PDF invoices in seconds.',
+  keywords: ['invoice generator', 'free invoice maker', 'invoice template', 'freelance invoice', 'small business invoice', 'create invoice', 'download pdf invoice'],
 };
 
 export default function RootLayout({
