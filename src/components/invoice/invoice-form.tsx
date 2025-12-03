@@ -1,4 +1,3 @@
-
 'use client';
 
 import type { UseFormReturn } from 'react-hook-form';
@@ -20,7 +19,7 @@ type InvoiceFormProps = {
 export function InvoiceForm({ form }: InvoiceFormProps) {
   return (
     <Form {...form}>
-      <form className="space-y-6">
+        <div className="space-y-6">
         <Accordion type="multiple" defaultValue={['item-1', 'item-2', 'item-3']} className="w-full">
           <AccordionItem value="item-1">
             <AccordionTrigger className="font-headline text-lg">Your Details (Freelancer)</AccordionTrigger>
@@ -104,7 +103,7 @@ export function InvoiceForm({ form }: InvoiceFormProps) {
           <h2 className="font-headline text-lg mb-2">Totals & Tax</h2>
            <Card>
             <CardContent className="pt-6 grid grid-cols-2 gap-4">
-              <FormField control={form.control} name="totals.discount" render={({ field }) => ( <FormItem><FormLabel>Discount Amount</FormLabel><FormControl><Input type="number" placeholder="e.g., 1000" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>)} />
+              <FormField control={form.control} name="totals.discount" render={({ field }) => ( <FormItem><FormLabel>Discount Amount</FormLabel><FormControl><Input type="number" placeholder="e.g., 1000" {...field} onChange={e => field.onChange(parseFloat(e.target.value) || 0)} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>)} />
                 <div />
               <div className="flex items-center space-x-2">
                 <FormField control={form.control} name="totals.applyTax" render={({ field }) => (
@@ -120,7 +119,7 @@ export function InvoiceForm({ form }: InvoiceFormProps) {
               {form.watch('totals.applyTax') && (
                 <>
                   <FormField control={form.control} name="totals.taxLabel" render={({ field }) => ( <FormItem><FormLabel>Tax Label</FormLabel><FormControl><Input placeholder="e.g., GST @ 18%" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                  <FormField control={form.control} name="totals.taxRate" render={({ field }) => ( <FormItem><FormLabel>Tax Rate (%)</FormLabel><FormControl><Input type="number" placeholder="e.g., 18" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>)} />
+                  <FormField control={form.control} name="totals.taxRate" render={({ field }) => ( <FormItem><FormLabel>Tax Rate (%)</FormLabel><FormControl><Input type="number" placeholder="e.g., 18" {...field} onChange={e => field.onChange(parseFloat(e.target.value) || 0)} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>)} />
                 </>
               )}
             </CardContent>
@@ -155,7 +154,7 @@ export function InvoiceForm({ form }: InvoiceFormProps) {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-      </form>
+      </div>
     </Form>
   );
 }

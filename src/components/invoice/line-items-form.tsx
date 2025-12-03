@@ -58,14 +58,14 @@ export function LineItemsForm({ form }: LineItemsFormProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField control={form.control} name={`lineItems.${index}.description`} render={({ field }) => ( <FormItem className="md:col-span-2"><FormLabel>Description</FormLabel><FormControl><Input placeholder="e.g., Custom Landing Page" {...field} /></FormControl><FormMessage /></FormItem> )} />
                 <FormField control={form.control} name={`lineItems.${index}.details`} render={({ field }) => ( <FormItem className="md:col-span-2"><FormLabel>Details (Optional)</FormLabel><FormControl><Textarea placeholder="- Detail 1&#10;- Detail 2" {...field} /></FormControl><FormMessage /></FormItem> )} />
-                <FormField control={form.control} name={`lineItems.${index}.quantity`} render={({ field }) => ( <FormItem><FormLabel>Quantity</FormLabel><FormControl><Input type="number" placeholder="1" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem> )} />
+                <FormField control={form.control} name={`lineItems.${index}.quantity`} render={({ field }) => ( <FormItem><FormLabel>Quantity</FormLabel><FormControl><Input type="number" placeholder="1" {...field} onChange={e => field.onChange(parseFloat(e.target.value) || 0)} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem> )} />
                 <FormItem>
                   <FormLabel>Rate</FormLabel>
                    <Popover open={suggestionIndex === index && suggestions.length > 0} onOpenChange={() => setSuggestionIndex(null)}>
                     <PopoverTrigger asChild>
                       <div className="relative">
                         <FormControl>
-                          <Input type="number" placeholder="25000" {...form.register(`lineItems.${index}.rate`)} onChange={e => form.setValue(`lineItems.${index}.rate`, parseFloat(e.target.value))} value={form.watch(`lineItems.${index}.rate`) ?? ''} />
+                          <Input type="number" placeholder="25000" {...form.register(`lineItems.${index}.rate`)} onChange={e => form.setValue(`lineItems.${index}.rate`, parseFloat(e.target.value) || 0)} value={form.watch(`lineItems.${index}.rate`) ?? ''} />
                         </FormControl>
                         <Button type="button" size="icon" variant="ghost" className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-accent" onClick={() => handleGetSuggestions(index)} disabled={loadingSuggestions}>
                           {loadingSuggestions ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
@@ -100,3 +100,5 @@ export function LineItemsForm({ form }: LineItemsFormProps) {
     </Card>
   );
 }
+
+    
