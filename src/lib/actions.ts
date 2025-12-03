@@ -1,61 +1,33 @@
 'use server';
 
-import { collection, addDoc, getDocs, doc, getDoc, setDoc, Timestamp, query, orderBy } from 'firebase/firestore';
-import { db } from './firebase';
 import { Invoice, InvoiceSchema } from './types';
 import { revalidatePath } from 'next/cache';
+import { randomUUID } from 'crypto';
 
-const convertDatesToTimestamps = (data: any): any => {
-  if (data instanceof Date) {
-    return Timestamp.fromDate(data);
-  }
-  if (Array.isArray(data)) {
-    return data.map(item => convertDatesToTimestamps(item));
-  }
-  if (typeof data === 'object' && data !== null) {
-    const res: { [key: string]: any } = {};
-    for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-        res[key] = convertDatesToTimestamps(data[key]);
-      }
-    }
-    return res;
-  }
-  return data;
-};
-
-const convertTimestampsToDates = (data: any): any => {
-  if (data instanceof Timestamp) {
-    return data.toDate();
-  }
-  if (Array.isArray(data)) {
-    return data.map(item => convertTimestampsToDates(item));
-  }
-  if (typeof data === 'object' && data !== null) {
-    const res: { [key: string]: any } = {};
-    for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-        res[key] = convertTimestampsToDates(data[key]);
-      }
-    }
-    return res;
-  }
-  return data;
-};
+// In-memory store for invoices
+let invoices: Invoice[] = [];
 
 export async function saveInvoice(invoiceData: Invoice) {
   try {
     const validatedData = InvoiceSchema.parse(invoiceData);
-    const cleanedData = JSON.parse(JSON.stringify(validatedData));
-    const firestoreData = convertDatesToTimestamps(cleanedData);
+    
+    let docId = validatedData.id;
 
-    let docId = invoiceData.id;
     if (docId) {
-      const docRef = doc(db, 'invoices', docId);
-      await setDoc(docRef, firestoreData, { merge: true });
+      // Update existing invoice
+      const index = invoices.findIndex(inv => inv.id === docId);
+      if (index !== -1) {
+        invoices[index] = validatedData;
+      } else {
+        // If not found, you might want to treat it as a new one or throw an error
+        // For simplicity, we'll add it if not found
+        invoices.push(validatedData);
+      }
     } else {
-      const newDocRef = await addDoc(collection(db, 'invoices'), firestoreData);
-      docId = newDocRef.id;
+      // Create new invoice
+      docId = randomUUID();
+      const newInvoice = { ...validatedData, id: docId };
+      invoices.push(newInvoice);
     }
     
     revalidatePath('/invoices');
@@ -64,20 +36,22 @@ export async function saveInvoice(invoiceData: Invoice) {
     return { success: true, id: docId };
   } catch (error) {
     console.error('Error saving invoice:', error);
+    if (error instanceof Error) {
+        return { success: false, error: error.message };
+    }
     return { success: false, error: 'Failed to save invoice.' };
   }
 }
 
 export async function getInvoices(): Promise<Invoice[]> {
   try {
-    const q = query(collection(db, 'invoices'), orderBy('invoiceMeta.invoiceDate', 'desc'));
-    const querySnapshot = await getDocs(q);
-    const invoices = querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    return convertTimestampsToDates(invoices) as Invoice[];
+    // Sort invoices by date in descending order
+    const sortedInvoices = [...invoices].sort((a, b) => {
+        const dateA = new Date(a.invoiceMeta.invoiceDate);
+        const dateB = new Date(b.invoiceMeta.invoiceDate);
+        return dateB.getTime() - dateA.getTime();
+    });
+    return JSON.parse(JSON.stringify(sortedInvoices));
   } catch (error) {
     console.error('Error fetching invoices:', error);
     return [];
@@ -87,12 +61,10 @@ export async function getInvoices(): Promise<Invoice[]> {
 export async function getInvoice(id: string): Promise<Invoice | null> {
   try {
     if (id === 'new') return null;
-    const docRef = doc(db, 'invoices', id);
-    const docSnap = await getDoc(docRef);
+    const invoice = invoices.find(inv => inv.id === id);
 
-    if (docSnap.exists()) {
-      const data = { id: docSnap.id, ...docSnap.data() };
-      return convertTimestampsToDates(data) as Invoice;
+    if (invoice) {
+      return JSON.parse(JSON.stringify(invoice));
     } else {
       console.log('No such document!');
       return null;
