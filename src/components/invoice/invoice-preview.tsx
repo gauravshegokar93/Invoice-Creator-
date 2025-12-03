@@ -38,8 +38,6 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
         <p className="text-gray-600">{freelancer.city}, {freelancer.state} {freelancer.pincode}</p>
       </div>
       <div className="text-right">
-        <div className="w-[120px] h-[120px] mb-4 ml-auto flex items-center justify-center">
-        </div>
         <h2 className="text-2xl font-semibold text-primary uppercase tracking-wider">Invoice</h2>
         <p className="text-gray-600"># {invoiceMeta.invoiceNumber}</p>
         {invoiceMeta.poNumber && <p className="text-gray-600">PO: {invoiceMeta.poNumber}</p>}
@@ -53,10 +51,6 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
     <div className="sticky top-24">
       <h2 className="font-headline text-lg mb-2 no-print">Live Preview</h2>
       <Card id="invoice-preview" className="w-full shadow-lg rounded-lg overflow-hidden">
-        <div id="pdf-header-placeholder" className="hidden print:block h-[200px]"></div>
-        <div id="pdf-header" className="print:hidden print:fixed print:top-0 print:left-0 print:right-0 print:bg-white print:px-8 print:pt-8">
-            {headerContent}
-        </div>
         <CardContent className="p-8 text-sm text-gray-800 bg-white">
           
           {headerContent}
@@ -157,5 +151,3 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
     </div>
   );
 }
-
-    
