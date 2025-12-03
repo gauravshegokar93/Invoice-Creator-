@@ -24,7 +24,6 @@ import { LineItemsForm } from './line-items-form';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ChangeEvent } from 'react';
 
 const currencies = [
   { value: '₹', label: 'INR (₹)' },
@@ -35,21 +34,9 @@ const currencies = [
 ];
 
 export function InvoiceForm() {
-  const { control, watch, setValue } = useFormContext<Invoice>();
+  const { control, watch } = useFormContext<Invoice>();
 
   const applyTax = watch('totals.applyTax');
-
-  const handleLogoUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setValue('freelancer.logoUrl', reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
 
   return (
     <div className="space-y-6">
@@ -82,13 +69,6 @@ export function InvoiceForm() {
                     </FormItem>
                   )}
                 />
-                <FormItem className="md:col-span-2">
-                  <FormLabel>Company Logo</FormLabel>
-                  <FormControl>
-                    <Input type="file" accept="image/*" onChange={handleLogoUpload} className="pt-2 text-sm" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
                 <FormField
                   control={control}
                   name="freelancer.email"
@@ -659,3 +639,5 @@ export function InvoiceForm() {
     </div>
   );
 }
+
+    

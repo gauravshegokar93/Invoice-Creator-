@@ -13,7 +13,6 @@ export const InvoiceSchema = z.object({
   id: z.string().optional(),
   freelancer: z.object({
     name: z.string(),
-    logoUrl: z.string().optional(),
     addressLine1: z.string(),
     addressLine2: z.string().optional(),
     city: z.string(),
@@ -66,7 +65,6 @@ export type Invoice = z.infer<typeof InvoiceSchema>;
 export const defaultInvoice: Invoice = {
   freelancer: {
     name: '',
-    logoUrl: '',
     addressLine1: '',
     city: '',
     state: '',
@@ -111,3 +109,5 @@ export const defaultInvoice: Invoice = {
   projectTimeline: "",
   extraTerms: ""
 };
+
+    

@@ -38,13 +38,8 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
         <p className="text-gray-600">{freelancer.city}, {freelancer.state} {freelancer.pincode}</p>
       </div>
       <div className="text-right">
-        {freelancer.logoUrl ? (
-          <Image src={freelancer.logoUrl} alt="Company Logo" width={120} height={120} className="mb-4 ml-auto" style={{ maxWidth: '120px', maxHeight: '120px', objectFit: 'contain' }}/>
-        ) : (
-          <div className="w-[120px] h-[120px] bg-gray-200 mb-4 ml-auto flex items-center justify-center">
-            <span className="text-xs text-gray-500">Your Logo</span>
-          </div>
-        )}
+        <div className="w-[120px] h-[120px] mb-4 ml-auto flex items-center justify-center">
+        </div>
         <h2 className="text-2xl font-semibold text-primary uppercase tracking-wider">Invoice</h2>
         <p className="text-gray-600"># {invoiceMeta.invoiceNumber}</p>
         {invoiceMeta.poNumber && <p className="text-gray-600">PO: {invoiceMeta.poNumber}</p>}
@@ -162,3 +157,5 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
     </div>
   );
 }
+
+    
