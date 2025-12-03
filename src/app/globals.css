@@ -76,10 +76,6 @@
     display: none !important;
   }
 
-  .print-only {
-    display: block !important;
-  }
-
   body * {
     visibility: hidden;
   }
@@ -112,26 +108,4 @@
   thead {
     display: table-header-group;
   }
-
-  .print-header-on-secondary-page {
-    display: none;
-  }
-  
-  #pdf-header-placeholder {
-     display: none;
-  }
-  
-  #pdf-content {
-    position: relative;
-  }
-
-  #pdf-first-page-header {
-    display: block;
-  }
-  
-  .pdf-secondary-page-header {
-    display: table-header-group;
-    break-before: page;
-  }
 }
-
