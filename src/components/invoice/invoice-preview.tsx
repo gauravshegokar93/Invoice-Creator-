@@ -28,25 +28,30 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
       </ul>
     );
   };
+  
+  const InvoiceHeader = ({ isFirstPage = true }) => (
+    <header id={isFirstPage ? 'pdf-first-page-header' : ''} className={`flex justify-between items-start pb-6 border-b-2 border-gray-200 ${isFirstPage ? '' : 'pdf-secondary-page-header p-8'}`}>
+      <div>
+        <h1 className="text-3xl font-bold font-headline text-gray-900">{freelancer.name}</h1>
+        <p className="text-gray-600">{freelancer.addressLine1}</p>
+        <p className="text-gray-600">{freelancer.city}, {freelancer.state} {freelancer.pincode}</p>
+      </div>
+      <div className="text-right">
+        <h2 className="text-2xl font-semibold text-primary uppercase tracking-wider">Invoice</h2>
+        <p className="text-gray-600"># {invoiceMeta.invoiceNumber}</p>
+        <p className="text-gray-600">Date: {invoiceMeta.invoiceDate ? format(new Date(invoiceMeta.invoiceDate), 'PPP') : ''}</p>
+        {invoiceMeta.dueDate && <p className="text-gray-600">Due: {format(new Date(invoiceMeta.dueDate), 'PPP')}</p>}
+      </div>
+    </header>
+  );
 
   return (
     <div className="sticky top-24">
       <h2 className="font-headline text-lg mb-2 no-print">Live Preview</h2>
       <Card id="invoice-preview" className="w-full shadow-lg rounded-lg overflow-hidden">
-        <CardContent className="p-8 text-sm text-gray-800 bg-white">
-          <header className="flex justify-between items-start pb-6 border-b-2 border-gray-200">
-            <div>
-              <h1 className="text-3xl font-bold font-headline text-gray-900">{freelancer.name}</h1>
-              <p className="text-gray-600">{freelancer.addressLine1}</p>
-              <p className="text-gray-600">{freelancer.city}, {freelancer.state} {freelancer.pincode}</p>
-            </div>
-            <div className="text-right">
-              <h2 className="text-2xl font-semibold text-primary uppercase tracking-wider">Invoice</h2>
-              <p className="text-gray-600"># {invoiceMeta.invoiceNumber}</p>
-              <p className="text-gray-600">Date: {invoiceMeta.invoiceDate ? format(new Date(invoiceMeta.invoiceDate), 'PPP') : ''}</p>
-              {invoiceMeta.dueDate && <p className="text-gray-600">Due: {format(new Date(invoiceMeta.dueDate), 'PPP')}</p>}
-            </div>
-          </header>
+        <CardContent id="pdf-content" className="p-8 text-sm text-gray-800 bg-white relative">
+          
+          <InvoiceHeader isFirstPage={true} />
 
           <section className="grid grid-cols-2 gap-4 my-6">
             <div>
@@ -64,7 +69,7 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
             </div>
           </section>
 
-          <section className="min-h-[250px]">
+          <section>
             <table className="w-full text-left">
               <thead className="bg-gray-50">
                 <tr>
@@ -72,6 +77,12 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
                   <th className="p-3 font-semibold text-gray-600 uppercase text-center">Qty</th>
                   <th className="p-3 font-semibold text-gray-600 uppercase text-right">Rate</th>
                   <th className="p-3 font-semibold text-gray-600 uppercase text-right">Amount</th>
+                </tr>
+                 {/* This is the header that will be repeated on subsequent pages */}
+                 <tr className="hidden print-only">
+                    <td colSpan={4}>
+                        <InvoiceHeader isFirstPage={false} />
+                    </td>
                 </tr>
               </thead>
               <tbody>
@@ -136,7 +147,7 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
             </div>}
           </section>
 
-          {footerNote && <footer className="mt-12 pt-6 border-t-2 text-center text-gray-500 font-semibold absolute bottom-8 left-0 right-0">
+          {footerNote && <footer className="mt-12 pt-6 border-t-2 text-center text-gray-500 font-semibold">
             <p>{footerNote}</p>
           </footer>}
         </CardContent>
