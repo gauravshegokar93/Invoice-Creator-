@@ -1,3 +1,4 @@
+
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,6 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { saveInvoice } from '@/lib/actions';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState, useTransition } from 'react';
+import { Form } from '@/components/ui/form';
 
 type InvoiceEditorProps = {
   initialData: Invoice;
@@ -77,37 +79,43 @@ export function InvoiceEditor({ initialData }: InvoiceEditorProps) {
     });
   };
   
-  // Effect to update URL with new ID after creation
   useEffect(() => {
     if (initialData.id && form.getValues('id') !== initialData.id) {
         form.setValue('id', initialData.id);
     }
   }, [initialData.id, form]);
 
+  useEffect(() => {
+    // Reset the form whenever the initial data changes, which happens on navigation.
+    form.reset(initialData);
+  }, [initialData, form]);
+
   return (
     <div className="p-4 md:p-8">
-       <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="flex flex-col-reverse md:flex-row md:items-center justify-between gap-4 mb-8">
-            <h1 className="text-2xl md:text-3xl font-bold font-headline">
-              {initialData.id ? 'Edit Invoice' : 'Create New Invoice'}
-            </h1>
-            <div className="flex gap-2">
-              <Button onClick={handlePrint} variant="outline" type="button">
-                <Download className="mr-2" />
-                Download PDF
-              </Button>
-              <Button type="submit" disabled={isPending || isSubmitting}>
-                {isPending || isSubmitting ? <Loader2 className="mr-2 animate-spin" /> : <Save className="mr-2" />}
-                {isPending || isSubmitting ? 'Saving...' : 'Save Invoice'}
-              </Button>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="flex flex-col-reverse md:flex-row md:items-center justify-between gap-4 mb-8">
+              <h1 className="text-2xl md:text-3xl font-bold font-headline">
+                {initialData.id ? 'Edit Invoice' : 'Create New Invoice'}
+              </h1>
+              <div className="flex gap-2">
+                <Button onClick={handlePrint} variant="outline" type="button">
+                  <Download className="mr-2" />
+                  Download PDF
+                </Button>
+                <Button type="submit" disabled={isPending || isSubmitting}>
+                  {isPending || isSubmitting ? <Loader2 className="mr-2 animate-spin" /> : <Save className="mr-2" />}
+                  {isPending || isSubmitting ? 'Saving...' : 'Save Invoice'}
+                </Button>
+              </div>
             </div>
-          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <InvoiceForm form={form} />
-            <InvoicePreview data={watchedValues} totals={calculatedTotals} />
-          </div>
-       </form>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <InvoiceForm />
+              <InvoicePreview data={watchedValues} totals={calculatedTotals} />
+            </div>
+          </form>
+        </Form>
     </div>
   );
 }

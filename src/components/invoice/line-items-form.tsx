@@ -2,8 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { UseFormReturn } from 'react-hook-form';
-import { useFieldArray } from 'react-hook-form';
+import { useFormContext, useFieldArray } from 'react-hook-form';
 import type { Invoice } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -14,11 +13,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Loader2, PlusCircle, Sparkles, Trash2 } from 'lucide-react';
 import { getInvoiceLineItemSuggestions } from '@/ai/flows/invoice-line-item-suggestions';
 
-type LineItemsFormProps = {
-  form: UseFormReturn<Invoice>;
-};
-
-export function LineItemsForm({ form }: LineItemsFormProps) {
+export function LineItemsForm() {
+  const form = useFormContext<Invoice>();
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: 'lineItems',
@@ -100,5 +96,3 @@ export function LineItemsForm({ form }: LineItemsFormProps) {
     </Card>
   );
 }
-
-    
