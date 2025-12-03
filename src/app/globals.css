@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -64,7 +65,12 @@
     margin: 0;
   }
 
-  body, html {
+  html,
+  body {
+    width: 210mm;
+    height: 100%;
+    margin: 0;
+    padding: 0;
     background: #fff;
     -webkit-print-color-adjust: exact;
     color-adjust: exact;
@@ -77,28 +83,33 @@
   #invoice-preview, #invoice-preview * {
     visibility: visible;
   }
-  
+
   #invoice-preview {
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
-    width: 210mm; /* A4 width */
-    height: 297mm; /* A4 height */
+    right: 0;
+    width: 100%;
     margin: 0;
     padding: 0;
     border: none;
     box-shadow: none;
     transform: scale(1);
-    page-break-after: always;
-    overflow: hidden;
+    page-break-after: auto;
+    page-break-before: auto;
+    overflow: visible;
+    min-height: 297mm; /* Ensure it takes at least one page height */
   }
 
   .no-print {
     display: none;
   }
 
-  /* Force elements to not be broken between pages */
-  h1, h2, h3, h4, h5, h6, p, tr, li, section {
+  h1, h2, h3, h4, h5, h6, p, tr, li, section, table, thead, tbody {
     page-break-inside: avoid;
+  }
+
+  section {
+    page-break-before: auto;
   }
 }
