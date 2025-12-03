@@ -107,9 +107,9 @@ export function InvoiceEditor({ initialData }: InvoiceEditorProps) {
           <div className="flex flex-col-reverse md:flex-row md:items-center justify-between gap-4 mb-8 no-print">
             <div className="flex-grow">
               <h1 className="text-2xl md:text-3xl font-bold font-headline">
-                {initialData.id ? 'Edit Invoice' : 'Free Online Invoice Generator'}
+                {initialData.id ? `Edit Invoice #${initialData.invoiceMeta.invoiceNumber}` : 'Create New Invoice'}
               </h1>
-               {initialData.id ? null : <h2 className='text-lg text-muted-foreground'>Create Professional Invoices Instantly (No Login Required)</h2>}
+               {initialData.id ? null : <h2 className='text-lg text-muted-foreground'>Fill in the details below to generate your free invoice.</h2>}
             </div>
             <div className="flex items-center gap-4">
               <Button type="submit" disabled={isSaving}>

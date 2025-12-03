@@ -16,8 +16,8 @@ export async function generateMetadata(
 
   if (id === 'new') {
     return {
-      title: 'Create New Invoice | InvoiceFlow',
-      description: 'Start creating a new professional invoice from scratch. Customize client details, line items, and payment terms.',
+      title: 'Create New Invoice | Free Invoice Generator',
+      description: 'Start creating a new professional invoice from scratch. Customize client details, line items, and payment terms instantly.',
     };
   }
 
