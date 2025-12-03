@@ -12,11 +12,15 @@ export const metadata: Metadata = {
     title: 'Free Online Invoice Generator — No Login Required',
     description: 'Create professional invoices instantly. Free, no signup, quick PDF download, and customizable fields.',
     type: 'website',
+    // TODO: Add a real URL to your preview image
+    // images: ['https://yourdomain.com/preview-image.png'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Free Online Invoice Generator — Fast & No Login',
     description: 'Generate invoices instantly. No account needed. Free PDF downloads.',
+    // TODO: Add a real URL to your preview image
+    // images: ['https://yourdomain.com/preview-image.png'],
   },
 };
 

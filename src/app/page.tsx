@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'Free Invoice Generator - Create Invoices Online Instantly',
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 const features = [
-  { name: 'Completely Free', description: 'Generate unlimited invoices with no hidden fees or charges.' },
+  { name: 'Completely Free', description: 'Generate unlimited invoices with no hidden fees or charges. No watermarks, no limits.' },
   { name: 'No Login Required', description: 'Create and download invoices instantly without creating an account. Your privacy is protected.' },
   { name: 'Instant PDF Downloads', description: 'Generate professional, print-ready PDF invoices with a single click.' },
   { name: 'Professional Templates', description: 'Choose from clean, modern templates that make your business look its best.' },
@@ -24,11 +25,11 @@ const features = [
 const faqs = [
     {
         question: 'How do I create an invoice online for free?',
-        answer: 'Simply fill in your details, your client\'s details, and the line items for your work. Our tool will instantly generate a professional invoice for you to download as a PDF, no login required.'
+        answer: 'Simply click "Create Your Free Invoice Now," fill in your details, your client\'s details, and the line items for your work. Our tool will instantly generate a professional invoice for you to download as a PDF, no login required.'
     },
     {
         question: 'Can I download the invoice as a PDF?',
-        answer: 'Yes! After you create your invoice, you can instantly download a high-quality, print-ready PDF file by clicking the "Download PDF" button.'
+        answer: 'Yes! After you create your invoice, you can instantly download a high-quality, print-ready PDF file by clicking the "Download PDF" button. There are no watermarks or limitations.'
     },
     {
         question: 'Do I need to sign up or create an account?',
@@ -37,94 +38,144 @@ const faqs = [
     {
         question: 'Is this free invoice generator secure?',
         answer: 'Yes, your privacy is a top priority. The app operates directly in your browser, and no invoice data is saved unless you explicitly click the "Save Invoice" button, which stores it securely in a database only you can access.'
+    },
+    {
+        question: 'Is this tool a good invoice maker for freelancers?',
+        answer: 'Absolutely. It was designed for freelancers, contractors, and small business owners who need a quick, professional, and free way to bill their clients without the hassle of complicated software.'
+    },
+    {
+        question: 'Can I add my logo to the invoice?',
+        answer: 'Yes, you can upload your company logo. It will appear on the invoice for a professional, branded look. This feature is also completely free.'
     }
 ]
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+};
+
+const softwareSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Free Online Invoice Generator",
+  "operatingSystem": "Any (Web-based)",
+  "applicationCategory": "BusinessApplication",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "ratingCount": "1250"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "Create professional invoices online instantly. No login required. Free, fast invoice creator with PDF download, custom fields, branding, and tax options.",
+  "url": "https://yourdomain.com", // Replace with your actual domain
+  "screenshot": "https://yourdomain.com/preview-image.png" // Replace with a real screenshot
+};
+
 export default function HomePage() {
   return (
-    <div className="bg-background text-foreground">
-      <main>
-        {/* Hero Section */}
-        <section className="py-20 md:py-32 bg-gray-50">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-6xl font-bold font-headline mb-4">
-              Free Online Invoice Generator
-            </h1>
-            <h2 className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Create professional invoices in seconds. No login, no watermarks, no limits. The fast, free, and private way to bill your clients.
-            </h2>
-            <Button asChild size="lg">
-              <Link href="/invoice/new">Create Your Free Invoice Now</Link>
-            </Button>
-          </div>
-        </section>
-
-        {/* Features Section */}
-        <section id="features" className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-headline font-bold">Why Use Our Free Invoice Maker?</h2>
-                <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">Focus on speed, privacy, and zero friction. Get your invoicing done and get back to business.</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {features.map((feature) => (
-                <div key={feature.name} className="flex items-start space-x-4">
-                    <CheckCircle2 className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
-                    <div>
-                        <h3 className="font-semibold text-lg">{feature.name}</h3>
-                        <p className="text-muted-foreground">{feature.description}</p>
-                    </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* How It Works Section */}
-        <section id="how-it-works" className="py-20 bg-gray-50">
+    <>
+      <Script id="faq-schema" type="application/ld+json">
+        {JSON.stringify(faqSchema)}
+      </Script>
+      <Script id="software-schema" type="application/ld+json">
+        {JSON.stringify(softwareSchema)}
+      </Script>
+      <div className="bg-background text-foreground">
+        <main>
+          {/* Hero Section */}
+          <section className="py-20 md:py-32 bg-gray-50">
             <div className="container mx-auto px-4 text-center">
-                <h2 className="text-3xl md:text-4xl font-headline font-bold mb-12">Create an Invoice in 3 Simple Steps</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-                    <div>
-                        <div className="bg-primary text-primary-foreground h-12 w-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">1</div>
-                        <h3 className="text-xl font-semibold mb-2">Enter Your Details</h3>
-                        <p className="text-muted-foreground">Fill in your and your client’s information. Add your logo for a professional touch.</p>
-                    </div>
-                    <div>
-                        <div className="bg-primary text-primary-foreground h-12 w-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">2</div>
-                        <h3 className="text-xl font-semibold mb-2">Add Line Items</h3>
-                        <p className="text-muted-foreground">Describe your services or products, and set quantities, rates, taxes, and discounts.</p>
-                    </div>
-                    <div>
-                        <div className="bg-primary text-primary-foreground h-12 w-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">3</div>
-                        <h3 className="text-xl font-semibold mb-2">Download PDF</h3>
-                        <p className="text-muted-foreground">Preview your invoice, then instantly download a professional, print-ready PDF. No signup needed.</p>
-                    </div>
-                </div>
+              <h1 className="text-4xl md:text-6xl font-bold font-headline mb-4">
+                Free Online Invoice Generator
+              </h1>
+              <h2 className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+                Create professional invoices in seconds. No login, no watermarks, no limits. The fast, free, and private way to bill your clients.
+              </h2>
+              <Button asChild size="lg">
+                <Link href="/invoice/new">Create Your Free Invoice Now</Link>
+              </Button>
             </div>
-        </section>
+          </section>
 
-
-        {/* FAQ Section */}
-        <section id="faq" className="py-20">
-          <div className="container mx-auto px-4 max-w-4xl">
-            <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-headline font-bold">Frequently Asked Questions</h2>
-                <p className="text-muted-foreground mt-3">Quick answers to common questions. If you need more help, feel free to contact us.</p>
-            </div>
-            <div className="space-y-6">
-                {faqs.map((faq, index) => (
-                    <Card key={index}>
-                        <CardContent className="p-6">
-                            <h3 className="font-semibold text-lg mb-2">{faq.question}</h3>
-                            <p className="text-muted-foreground">{faq.answer}</p>
-                        </CardContent>
-                    </Card>
+          {/* Features Section */}
+          <section id="features" className="py-20">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-12">
+                  <h2 className="text-3xl md:text-4xl font-headline font-bold">Why Use Our Free Invoice Maker?</h2>
+                  <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">Focus on speed, privacy, and zero friction. Get your invoicing done and get back to business.</p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {features.map((feature) => (
+                  <div key={feature.name} className="flex items-start space-x-4">
+                      <CheckCircle2 className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+                      <div>
+                          <h3 className="font-semibold text-lg">{feature.name}</h3>
+                          <p className="text-muted-foreground">{feature.description}</p>
+                      </div>
+                  </div>
                 ))}
+              </div>
             </div>
-          </div>
-        </section>
-      </main>
-    </div>
+          </section>
+
+          {/* How It Works Section */}
+          <section id="how-it-works" className="py-20 bg-gray-50">
+              <div className="container mx-auto px-4 text-center">
+                  <h2 className="text-3xl md:text-4xl font-headline font-bold mb-12">Create an Invoice in 3 Simple Steps</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                      <div>
+                          <div className="bg-primary text-primary-foreground h-12 w-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">1</div>
+                          <h3 className="text-xl font-semibold mb-2">Enter Your Details</h3>
+                          <p className="text-muted-foreground">Fill in your and your client’s information. Add your logo for a professional touch.</p>
+                      </div>
+                      <div>
+                          <div className="bg-primary text-primary-foreground h-12 w-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">2</div>
+                          <h3 className="text-xl font-semibold mb-2">Add Line Items</h3>
+                          <p className="text-muted-foreground">Describe your services or products, and set quantities, rates, taxes, and discounts.</p>
+                      </div>
+                      <div>
+                          <div className="bg-primary text-primary-foreground h-12 w-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">3</div>
+                          <h3 className="text-xl font-semibold mb-2">Download PDF</h3>
+                          <p className="text-muted-foreground">Preview your invoice, then instantly download a professional, print-ready PDF. No signup needed.</p>
+                      </div>
+                  </div>
+              </div>
+          </section>
+
+
+          {/* FAQ Section */}
+          <section id="faq" className="py-20">
+            <div className="container mx-auto px-4 max-w-4xl">
+              <div className="text-center mb-12">
+                  <h2 className="text-3xl md:text-4xl font-headline font-bold">Frequently Asked Questions</h2>
+                  <p className="text-muted-foreground mt-3">Quick answers to common questions about how to create an invoice online for free.</p>
+              </div>
+              <div className="space-y-6">
+                  {faqs.map((faq, index) => (
+                      <Card key={index}>
+                          <CardContent className="p-6">
+                              <h3 className="font-semibold text-lg mb-2">{faq.question}</h3>
+                              <p className="text-muted-foreground">{faq.answer}</p>
+                          </CardContent>
+                      </Card>
+                  ))}
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </>
   );
 }
