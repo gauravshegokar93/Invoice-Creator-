@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useFormContext } from 'react-hook-form';
@@ -42,12 +43,12 @@ export function InvoiceForm() {
           </AccordionTrigger>
           <AccordionContent>
             <Card>
-              <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-x-4">
                 <FormField
                   control={control}
                   name="freelancer.name"
                   render={({ field }) => (
-                    <FormItem className="md:col-span-2">
+                    <FormItem className="md:col-span-2 mb-4">
                       <FormLabel>Your Name/Company Name</FormLabel>
                       <FormControl>
                         <Input
@@ -63,7 +64,7 @@ export function InvoiceForm() {
                   control={control}
                   name="freelancer.email"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input
@@ -79,7 +80,7 @@ export function InvoiceForm() {
                   control={control}
                   name="freelancer.phone"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Phone</FormLabel>
                       <FormControl>
                         <Input
@@ -95,7 +96,7 @@ export function InvoiceForm() {
                   control={control}
                   name="freelancer.addressLine1"
                   render={({ field }) => (
-                    <FormItem className="md:col-span-2">
+                    <FormItem className="md:col-span-2 mb-4">
                       <FormLabel>Address Line 1</FormLabel>
                       <FormControl>
                         <Input placeholder="e.g., Baner" {...field} />
@@ -108,7 +109,7 @@ export function InvoiceForm() {
                   control={control}
                   name="freelancer.city"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>City</FormLabel>
                       <FormControl>
                         <Input placeholder="e.g., Pune" {...field} />
@@ -121,7 +122,7 @@ export function InvoiceForm() {
                   control={control}
                   name="freelancer.state"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>State</FormLabel>
                       <FormControl>
                         <Input placeholder="e.g., Maharashtra" {...field} />
@@ -134,7 +135,7 @@ export function InvoiceForm() {
                   control={control}
                   name="freelancer.pincode"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Pincode</FormLabel>
                       <FormControl>
                         <Input placeholder="e.g., 411045" {...field} />
@@ -147,7 +148,7 @@ export function InvoiceForm() {
                   control={control}
                   name="freelancer.website"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Website (Optional)</FormLabel>
                       <FormControl>
                         <Input
@@ -171,12 +172,12 @@ export function InvoiceForm() {
           </AccordionTrigger>
           <AccordionContent>
             <Card>
-              <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-x-4">
                 <FormField
                   control={control}
                   name="client.organizationName"
                   render={({ field }) => (
-                    <FormItem className="md:col-span-2">
+                    <FormItem className="md:col-span-2 mb-4">
                       <FormLabel>Organization Name</FormLabel>
                       <FormControl>
                         <Input
@@ -192,7 +193,7 @@ export function InvoiceForm() {
                   control={control}
                   name="client.name"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Contact Person</FormLabel>
                       <FormControl>
                         <Input
@@ -208,7 +209,7 @@ export function InvoiceForm() {
                   control={control}
                   name="client.phone"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Phone</FormLabel>
                       <FormControl>
                         <Input
@@ -224,7 +225,7 @@ export function InvoiceForm() {
                   control={control}
                   name="client.addressLine"
                   render={({ field }) => (
-                    <FormItem className="md:col-span-2">
+                    <FormItem className="md:col-span-2 mb-4">
                       <FormLabel>Address</FormLabel>
                       <FormControl>
                         <Input
@@ -240,7 +241,7 @@ export function InvoiceForm() {
                   control={control}
                   name="client.city"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>City</FormLabel>
                       <FormControl>
                         <Input placeholder="e.g., Pune" {...field} />
@@ -253,7 +254,7 @@ export function InvoiceForm() {
                   control={control}
                   name="client.pincode"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Pincode</FormLabel>
                       <FormControl>
                         <Input placeholder="e.g., 411057" {...field} />
@@ -274,12 +275,12 @@ export function InvoiceForm() {
           </AccordionTrigger>
           <AccordionContent>
             <Card>
-              <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-x-4">
                 <FormField
                   control={control}
                   name="invoiceMeta.invoiceNumber"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Invoice Number</FormLabel>
                       <FormControl>
                         <Input
@@ -295,7 +296,7 @@ export function InvoiceForm() {
                   control={control}
                   name="invoiceMeta.currencySymbol"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Currency Symbol</FormLabel>
                       <FormControl>
                         <Input placeholder="e.g., ₹, $" {...field} />
@@ -308,7 +309,7 @@ export function InvoiceForm() {
                   control={control}
                   name="invoiceMeta.invoiceDate"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Invoice Date</FormLabel>
                       <FormControl>
                         <DatePicker
@@ -324,7 +325,7 @@ export function InvoiceForm() {
                   control={control}
                   name="invoiceMeta.dueDate"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Due Date (Optional)</FormLabel>
                       <FormControl>
                         <DatePicker
@@ -352,12 +353,12 @@ export function InvoiceForm() {
       <div>
         <h2 className="font-headline text-lg mb-2">Totals & Tax</h2>
         <Card>
-          <CardContent className="pt-6 grid grid-cols-2 gap-4">
+          <CardContent className="pt-6 grid grid-cols-2 gap-x-4">
             <FormField
               control={control}
               name="totals.discount"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="mb-4">
                   <FormLabel>Discount Amount</FormLabel>
                   <FormControl>
                     <Input
@@ -375,7 +376,7 @@ export function InvoiceForm() {
               )}
             />
             <div />
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 mb-4 col-span-2">
               <FormField
                 control={control}
                 name="totals.applyTax"
@@ -395,14 +396,13 @@ export function InvoiceForm() {
                 )}
               />
             </div>
-            <div />
             {applyTax && (
               <>
                 <FormField
                   control={control}
                   name="totals.taxLabel"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Tax Label</FormLabel>
                       <FormControl>
                         <Input
@@ -418,7 +418,7 @@ export function InvoiceForm() {
                   control={control}
                   name="totals.taxRate"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Tax Rate (%)</FormLabel>
                       <FormControl>
                         <Input
@@ -453,12 +453,12 @@ export function InvoiceForm() {
           </AccordionTrigger>
           <AccordionContent>
             <Card>
-              <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-x-4">
                 <FormField
                   control={control}
                   name="paymentTerms.termsText"
                   render={({ field }) => (
-                    <FormItem className="md:col-span-2">
+                    <FormItem className="md:col-span-2 mb-4">
                       <FormLabel>Payment Terms</FormLabel>
                       <FormControl>
                         <Textarea
@@ -474,7 +474,7 @@ export function InvoiceForm() {
                   control={control}
                   name="bankDetails.bankName"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Bank Name</FormLabel>
                       <FormControl>
                         <Input
@@ -490,7 +490,7 @@ export function InvoiceForm() {
                   control={control}
                   name="bankDetails.accountNumber"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Account Number</FormLabel>
                       <FormControl>
                         <Input
@@ -506,7 +506,7 @@ export function InvoiceForm() {
                   control={control}
                   name="bankDetails.ifsc"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>IFSC Code</FormLabel>
                       <FormControl>
                         <Input
@@ -522,7 +522,7 @@ export function InvoiceForm() {
                   control={control}
                   name="bankDetails.upiId"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>UPI ID (Optional)</FormLabel>
                       <FormControl>
                         <Input
@@ -546,12 +546,12 @@ export function InvoiceForm() {
           </AccordionTrigger>
           <AccordionContent>
             <Card>
-              <CardContent className="pt-6 grid grid-cols-1 gap-4">
+              <CardContent className="pt-6 grid grid-cols-1 gap-x-4">
                 <FormField
                   control={control}
                   name="projectTimeline"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Project Timeline (Optional)</FormLabel>
                       <FormControl>
                         <Textarea
@@ -567,7 +567,7 @@ export function InvoiceForm() {
                   control={control}
                   name="extraTerms"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Terms & Conditions (Optional)</FormLabel>
                       <FormControl>
                         <Textarea
@@ -583,7 +583,7 @@ export function InvoiceForm() {
                   control={control}
                   name="footerNote"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="mb-4">
                       <FormLabel>Footer Note (Optional)</FormLabel>
                       <FormControl>
                         <Input
