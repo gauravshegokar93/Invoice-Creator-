@@ -40,7 +40,7 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
       <div className="text-right">
         <h2 className="text-2xl font-semibold text-primary uppercase tracking-wider">Invoice</h2>
         <p className="text-gray-600"># {invoiceMeta.invoiceNumber}</p>
-        {invoiceMeta.poNumber && <p className="text-gray-600">PO: {invoiceMeta.poNumber}</p>}
+        {invoiceMeta.purchaseNumber && <p className="text-gray-600">PO: {invoiceMeta.purchaseNumber}</p>}
         <p className="text-gray-600">Date: {invoiceMeta.invoiceDate ? format(new Date(invoiceMeta.invoiceDate), 'PPP') : ''}</p>
         {invoiceMeta.dueDate && <p className="text-gray-600">Due: {format(new Date(invoiceMeta.dueDate), 'PPP')}</p>}
       </div>

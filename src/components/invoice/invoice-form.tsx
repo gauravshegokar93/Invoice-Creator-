@@ -303,13 +303,13 @@ export function InvoiceForm() {
                 />
                  <FormField
                   control={control}
-                  name="invoiceMeta.poNumber"
+                  name="invoiceMeta.purchaseNumber"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>PO Number (Optional)</FormLabel>
+                      <FormLabel>Purchase Number (Optional)</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="PO Number"
+                          placeholder="Purchase Number"
                           {...field}
                         />
                       </FormControl>
@@ -639,5 +639,3 @@ export function InvoiceForm() {
     </div>
   );
 }
-
-    
