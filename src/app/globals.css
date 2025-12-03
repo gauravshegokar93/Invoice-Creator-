@@ -65,15 +65,15 @@
     margin: 0;
   }
 
-  html,
   body {
-    width: 210mm;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background: #fff;
     -webkit-print-color-adjust: exact;
     color-adjust: exact;
+    background: #fff;
+    margin: 0;
+  }
+
+  .no-print {
+    display: none;
   }
 
   body * {
@@ -85,26 +85,20 @@
   }
 
   #invoice-preview {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
+    position: static;
+    display: block;
     width: 100%;
+    height: auto;
     margin: 0;
     padding: 0;
     border: none;
     box-shadow: none;
-    transform: scale(1);
+    transform: none;
     page-break-after: auto;
     page-break-before: auto;
     overflow: visible;
-    min-height: 297mm; /* Ensure it takes at least one page height */
   }
-
-  .no-print {
-    display: none;
-  }
-
+  
   h1, h2, h3, h4, h5, h6, p, tr, li, section, table, thead, tbody {
     page-break-inside: avoid;
   }
