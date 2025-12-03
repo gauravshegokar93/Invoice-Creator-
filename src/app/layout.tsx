@@ -4,9 +4,19 @@ import { Toaster } from "@/components/ui/toaster"
 import { AppHeader } from '@/components/app-header';
 
 export const metadata: Metadata = {
-  title: 'InvoiceFlow | Free & Simple Invoice Generator for Freelancers',
-  description: 'Create, preview, and download professional invoices for free. The perfect invoice maker for freelancers and small businesses. Generate and download PDF invoices in seconds.',
-  keywords: ['invoice generator', 'free invoice maker', 'invoice template', 'freelance invoice', 'small business invoice', 'create invoice', 'download pdf invoice'],
+  title: 'Free Online Invoice Generator | Create Invoices Without Login',
+  description: 'Create professional invoices online instantly. No login required. Free, fast invoice creator with PDF download, custom fields, branding, and tax options.',
+  keywords: ['free invoice generator', 'online invoice creator', 'create invoice without login', 'invoice maker free', 'invoice template online', 'instant invoice PDF'],
+  openGraph: {
+    title: 'Free Online Invoice Generator — No Login Required',
+    description: 'Create professional invoices instantly. Free, no signup, quick PDF download, and customizable fields.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free Online Invoice Generator — Fast & No Login',
+    description: 'Generate invoices instantly. No account needed. Free PDF downloads.',
+  },
 };
 
 export default function RootLayout({

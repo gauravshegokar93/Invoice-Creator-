@@ -50,7 +50,12 @@ export function InvoiceEditor({ initialData }: InvoiceEditorProps) {
     const grandTotal = taxableAmount + taxAmount;
 
     return { subtotal, taxAmount, grandTotal };
-  }, [watchedValues]);
+  }, [
+    watchedValues.lineItems,
+    watchedValues.totals.discount,
+    watchedValues.totals.applyTax,
+    watchedValues.totals.taxRate,
+  ]);
   
   useEffect(() => {
     // Reset form with initial data when it changes (on navigation)
@@ -100,9 +105,12 @@ export function InvoiceEditor({ initialData }: InvoiceEditorProps) {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col-reverse md:flex-row md:items-center justify-between gap-4 mb-8 no-print">
-            <h1 className="text-2xl md:text-3xl font-bold font-headline">
-              {initialData.id ? 'Edit Invoice' : 'Create New Invoice'}
-            </h1>
+            <div className="flex-grow">
+              <h1 className="text-2xl md:text-3xl font-bold font-headline">
+                {initialData.id ? 'Edit Invoice' : 'Free Online Invoice Generator'}
+              </h1>
+               {initialData.id ? null : <h2 className='text-lg text-muted-foreground'>Create Professional Invoices Instantly (No Login Required)</h2>}
+            </div>
             <div className="flex items-center gap-4">
               <Button type="submit" disabled={isSaving}>
                 {isSaving ? (
