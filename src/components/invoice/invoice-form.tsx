@@ -1,3 +1,4 @@
+
 'use client';
 
 import type { UseFormReturn } from 'react-hook-form';
@@ -56,7 +57,7 @@ export function InvoiceForm({ form }: InvoiceFormProps) {
                   )} />
                   <FormField control={form.control} name="freelancer.city" render={({ field }) => ( <FormItem><FormLabel>City</FormLabel><FormControl><Input placeholder="e.g., Pune" {...field} /></FormControl><FormMessage /></FormItem>)} />
                   <FormField control={form.control} name="freelancer.state" render={({ field }) => ( <FormItem><FormLabel>State</FormLabel><FormControl><Input placeholder="e.g., Maharashtra" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                  <FormField control={form.control} name="freelancer.pincode" render={({ field }) => ( <FormItem><FormLabel>Pincode</FormLabel><FormControl><Input placeholder="e.g., 411045" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                  <FormField control={form.control} name="freelancer.pincode" render={({ field }) => ( <FormItem><FormLabel>Pincode</FormLabel><FormControl><Input placeholder="e.g., 411045" {...field} /></FormControl><FormMessage /></FormMessage></FormItem>)} />
                   <FormField control={form.control} name="freelancer.website" render={({ field }) => ( <FormItem><FormLabel>Website (Optional)</FormLabel><FormControl><Input placeholder="e.g., https://your-site.com" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 </CardContent>
               </Card>
@@ -70,7 +71,7 @@ export function InvoiceForm({ form }: InvoiceFormProps) {
                 <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormField control={form.control} name="client.organizationName" render={({ field }) => ( <FormItem className="md:col-span-2"><FormLabel>Organization Name</FormLabel><FormControl><Input placeholder="e.g., BrightWave Digital" {...field} /></FormControl><FormMessage /></FormItem> )} />
                   <FormField control={form.control} name="client.name" render={({ field }) => ( <FormItem><FormLabel>Contact Person</FormLabel><FormControl><Input placeholder="e.g., Marketing Manager" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                  <FormField control={form.control} name="client.phone" render={({ field }) => ( <FormItem><FormLabel>Phone</FormLabel><FormControl><Input placeholder="e.g., +91 90000 11122" {...field} /></FormControl><FormMessage /></FormMessage>)} />
+                  <FormField control={form.control} name="client.phone" render={({ field }) => ( <FormItem><FormLabel>Phone</FormLabel><FormControl><Input placeholder="e.g., +91 90000 11122" {...field} /></FormControl><FormMessage /></FormItem>)} />
                   <FormField control={form.control} name="client.addressLine" render={({ field }) => ( <FormItem className="md:col-span-2"><FormLabel>Address</FormLabel><FormControl><Input placeholder="e.g., Hinjawadi Phase 2" {...field} /></FormControl><FormMessage /></FormItem>)} />
                   <FormField control={form.control} name="client.city" render={({ field }) => ( <FormItem><FormLabel>City</FormLabel><FormControl><Input placeholder="e.g., Pune" {...field} /></FormControl><FormMessage /></FormItem>)} />
                   <FormField control={form.control} name="client.pincode" render={({ field }) => ( <FormItem><FormLabel>Pincode</FormLabel><FormControl><Input placeholder="e.g., 411057" {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -103,7 +104,7 @@ export function InvoiceForm({ form }: InvoiceFormProps) {
           <h2 className="font-headline text-lg mb-2">Totals & Tax</h2>
            <Card>
             <CardContent className="pt-6 grid grid-cols-2 gap-4">
-              <FormField control={form.control} name="totals.discount" render={({ field }) => ( <FormItem><FormLabel>Discount Amount</FormLabel><FormControl><Input type="number" placeholder="e.g., 1000" {...field} /></FormControl><FormMessage /></FormItem>)} />
+              <FormField control={form.control} name="totals.discount" render={({ field }) => ( <FormItem><FormLabel>Discount Amount</FormLabel><FormControl><Input type="number" placeholder="e.g., 1000" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>)} />
                 <div />
               <div className="flex items-center space-x-2">
                 <FormField control={form.control} name="totals.applyTax" render={({ field }) => (
@@ -119,7 +120,7 @@ export function InvoiceForm({ form }: InvoiceFormProps) {
               {form.watch('totals.applyTax') && (
                 <>
                   <FormField control={form.control} name="totals.taxLabel" render={({ field }) => ( <FormItem><FormLabel>Tax Label</FormLabel><FormControl><Input placeholder="e.g., GST @ 18%" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                  <FormField control={form.control} name="totals.taxRate" render={({ field }) => ( <FormItem><FormLabel>Tax Rate (%)</FormLabel><FormControl><Input type="number" placeholder="e.g., 18" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                  <FormField control={form.control} name="totals.taxRate" render={({ field }) => ( <FormItem><FormLabel>Tax Rate (%)</FormLabel><FormControl><Input type="number" placeholder="e.g., 18" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>)} />
                 </>
               )}
             </CardContent>
@@ -135,7 +136,7 @@ export function InvoiceForm({ form }: InvoiceFormProps) {
                   <FormField control={form.control} name="paymentTerms.termsText" render={({ field }) => ( <FormItem className="md:col-span-2"><FormLabel>Payment Terms</FormLabel><FormControl><Textarea placeholder="e.g., 50% advance..." {...field} /></FormControl><FormMessage /></FormItem>)} />
                   <FormField control={form.control} name="bankDetails.bankName" render={({ field }) => ( <FormItem><FormLabel>Bank Name</FormLabel><FormControl><Input placeholder="e.g., HDFC Bank" {...field} /></FormControl><FormMessage /></FormItem>)} />
                   <FormField control={form.control} name="bankDetails.accountNumber" render={({ field }) => ( <FormItem><FormLabel>Account Number</FormLabel><FormControl><Input placeholder="e.g., 501002XXXXXX" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                  <FormField control={form.control} name="bankDetails.ifsc" render={({ field }) => ( <FormItem><FormLabel>IFSC Code</FormLabel><FormControl><Input placeholder="e.g., HDFC0001234" {...field} /></FormControl><FormMessage /></FormMessage>)} />
+                  <FormField control={form.control} name="bankDetails.ifsc" render={({ field }) => ( <FormItem><FormLabel>IFSC Code</FormLabel><FormControl><Input placeholder="e.g., HDFC0001234" {...field} /></FormControl><FormMessage /></FormItem>)} />
                   <FormField control={form.control} name="bankDetails.upiId" render={({ field }) => ( <FormItem><FormLabel>UPI ID (Optional)</FormLabel><FormControl><Input placeholder="e.g., your-upi@okhdfc" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 </CardContent>
               </Card>
@@ -148,7 +149,7 @@ export function InvoiceForm({ form }: InvoiceFormProps) {
                 <CardContent className="pt-6 grid grid-cols-1 gap-4">
                   <FormField control={form.control} name="projectTimeline" render={({ field }) => ( <FormItem><FormLabel>Project Timeline (Optional)</FormLabel><FormControl><Textarea placeholder="e.g., Design: 2-3 Days..." {...field} /></FormControl><FormMessage /></FormItem>)} />
                   <FormField control={form.control} name="extraTerms" render={({ field }) => ( <FormItem><FormLabel>Terms & Conditions (Optional)</FormLabel><FormControl><Textarea placeholder="e.g., Two rounds of revisions included..." {...field} /></FormControl><FormMessage /></FormItem>)} />
-                  <FormField control={form.control} name="footerNote" render={({ field }) => ( <FormItem><FormLabel>Footer Note (Optional)</FormLabel><FormControl><Input placeholder="e.g., Thank you for your business!" {...field} /></FormControl><FormMessage /></FormMessage>)} />
+                  <FormField control={form.control} name="footerNote" render={({ field }) => ( <FormItem><FormLabel>Footer Note (Optional)</FormLabel><FormControl><Input placeholder="e.g., Thank you for your business!" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 </CardContent>
               </Card>
             </AccordionContent>
