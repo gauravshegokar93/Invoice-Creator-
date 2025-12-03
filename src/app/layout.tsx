@@ -5,24 +5,24 @@ import { AppHeader } from '@/components/app-header';
 import Script from 'next/script';
 
 export const metadata: Metadata = {
-  title: 'Free Online Invoice Generator | Create Invoices Without Login',
-  description: 'Create professional invoices online instantly. No login required. Free, fast invoice creator with PDF download, custom fields, branding, and tax options.',
-  keywords: ['free invoice generator', 'online invoice creator', 'create invoice without login', 'invoice maker free', 'invoice template online', 'instant invoice PDF'],
+  title: 'Free Online Invoice Generator | Create Invoices Instantly',
+  description: 'Create professional invoices for free with our online invoice generator. No login required. Instantly download, print, or send PDF invoices.',
+  keywords: ['free online invoice generator', 'invoice maker', 'create invoice online', 'invoice generator without login', 'instant invoice PDF', 'freelance invoice template', 'small business invoicing'],
   openGraph: {
-    title: 'Free Online Invoice Generator — No Login Required',
-    description: 'Create professional invoices instantly. Free, no signup, quick PDF download, and customizable fields.',
+    title: 'InvoiceFlow | The Ultimate Free Online Invoice Generator',
+    description: 'Create professional invoices in seconds. No signup, unlimited free invoices, and instant PDF downloads. Perfect for freelancers and small businesses.',
+    url: 'https://invoiceflow.app', // Replace with your actual domain
     type: 'website',
-    // TODO: Add a real URL to your preview image
-    // images: ['https://yourdomain.com/preview-image.png'],
+    images: ['https://invoiceflow.app/og-image.png'], // Replace with your actual preview image URL
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Free Online Invoice Generator — Fast & No Login',
-    description: 'Generate invoices instantly. No account needed. Free PDF downloads.',
-    // TODO: Add a real URL to your preview image
-    // images: ['https://yourdomain.com/preview-image.png'],
+    title: 'InvoiceFlow: Free Online Invoice Generator (No Login Required)',
+    description: 'The fastest way to create and send professional invoices. Free, no limits, no signup. Get your invoice as a PDF instantly.',
+    images: ['https://invoiceflow.app/twitter-image.png'], // Replace with your actual preview image URL
   },
 };
+
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
