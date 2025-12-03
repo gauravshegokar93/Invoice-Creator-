@@ -39,14 +39,23 @@ export function InvoiceEditor({ initialData }: InvoiceEditorProps) {
       0
     );
     const discount = watchedValues.totals.discount || 0;
-    const taxableAmount = Math.max(0, subtotal - discount);
-    const taxAmount = watchedValues.totals.applyTax
-      ? taxableAmount * ((watchedValues.totals.taxRate || 0) / 100)
-      : 0;
+    const subtotalAfterDiscount = subtotal - discount;
+    const taxableAmount = Math.max(0, subtotalAfterDiscount);
+
+    const taxAmount =
+      watchedValues.totals.applyTax && watchedValues.totals.taxRate > 0
+        ? taxableAmount * (watchedValues.totals.taxRate / 100)
+        : 0;
+
     const grandTotal = taxableAmount + taxAmount;
 
     return { subtotal, taxAmount, grandTotal };
-  }, [watchedValues.lineItems, watchedValues.totals]);
+  }, [
+    watchedValues.lineItems,
+    watchedValues.totals.discount,
+    watchedValues.totals.applyTax,
+    watchedValues.totals.taxRate,
+  ]);
 
 
   const debouncedSave = useDebouncedCallback(async (data: Invoice) => {
