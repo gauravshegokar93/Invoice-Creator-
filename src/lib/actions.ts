@@ -1,3 +1,4 @@
+
 'use server';
 
 import { Invoice, InvoiceSchema } from './types';
@@ -7,26 +8,67 @@ import { randomUUID } from 'crypto';
 // In-memory store for invoices
 let invoices: Invoice[] = [];
 
+// Helper to convert Date objects in invoice data to strings
+function serializeDates(data: any): any {
+  if (data instanceof Date) {
+    return data.toISOString();
+  }
+  if (Array.isArray(data)) {
+    return data.map(serializeDates);
+  }
+  if (typeof data === 'object' && data !== null) {
+    const newData: {[key: string]: any} = {};
+    for (const key in data) {
+      newData[key] = serializeDates(data[key]);
+    }
+    return newData;
+  }
+  return data;
+}
+
+// Helper to convert date strings back to Date objects
+function deserializeDates(data: any): any {
+    if (typeof data === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(data)) {
+      const date = new Date(data);
+      if (!isNaN(date.getTime())) {
+          return date;
+      }
+    }
+    if (Array.isArray(data)) {
+      return data.map(deserializeDates);
+    }
+    if (typeof data === 'object' && data !== null) {
+      const newData: {[key: string]: any} = {};
+      for (const key in data) {
+        newData[key] = deserializeDates(data[key]);
+      }
+      return newData;
+    }
+    return data;
+}
+
+
 export async function saveInvoice(invoiceData: Invoice) {
   try {
     const validatedData = InvoiceSchema.parse(invoiceData);
     
-    let docId = validatedData.id;
+    // Convert dates to strings before storing
+    const serializableData = serializeDates(validatedData);
+    
+    let docId = serializableData.id;
 
     if (docId) {
       // Update existing invoice
       const index = invoices.findIndex(inv => inv.id === docId);
       if (index !== -1) {
-        invoices[index] = validatedData;
+        invoices[index] = serializableData;
       } else {
-        // If not found, you might want to treat it as a new one or throw an error
-        // For simplicity, we'll add it if not found
-        invoices.push(validatedData);
+        invoices.push(serializableData);
       }
     } else {
       // Create new invoice
       docId = randomUUID();
-      const newInvoice = { ...validatedData, id: docId };
+      const newInvoice = { ...serializableData, id: docId };
       invoices.push(newInvoice);
     }
     
@@ -51,7 +93,8 @@ export async function getInvoices(): Promise<Invoice[]> {
         const dateB = new Date(b.invoiceMeta.invoiceDate);
         return dateB.getTime() - dateA.getTime();
     });
-    return JSON.parse(JSON.stringify(sortedInvoices));
+    // Convert date strings back to Date objects before sending to client
+    return deserializeDates(sortedInvoices);
   } catch (error) {
     console.error('Error fetching invoices:', error);
     return [];
@@ -64,7 +107,8 @@ export async function getInvoice(id: string): Promise<Invoice | null> {
     const invoice = invoices.find(inv => inv.id === id);
 
     if (invoice) {
-      return JSON.parse(JSON.stringify(invoice));
+       // Convert date strings back to Date objects
+      return deserializeDates(invoice);
     } else {
       console.log('No such document!');
       return null;
