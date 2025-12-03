@@ -43,19 +43,14 @@ export function InvoiceEditor({ initialData }: InvoiceEditorProps) {
     const taxableAmount = Math.max(0, subtotalAfterDiscount);
 
     const taxAmount =
-      watchedValues.totals.applyTax && watchedValues.totals.taxRate > 0
-        ? taxableAmount * (watchedValues.totals.taxRate / 100)
+      watchedValues.totals.applyTax
+        ? taxableAmount * ((watchedValues.totals.taxRate || 0) / 100)
         : 0;
 
     const grandTotal = taxableAmount + taxAmount;
 
     return { subtotal, taxAmount, grandTotal };
-  }, [
-    watchedValues.lineItems,
-    watchedValues.totals.discount,
-    watchedValues.totals.applyTax,
-    watchedValues.totals.taxRate,
-  ]);
+  }, [watchedValues]);
   
   useEffect(() => {
     // Reset form with initial data when it changes (on navigation)
