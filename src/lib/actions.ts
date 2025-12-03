@@ -3,46 +3,41 @@
 
 import { Invoice, InvoiceSchema } from './types';
 import { revalidatePath } from 'next/cache';
-import { randomUUID } from 'crypto';
+import { db } from './firebase';
+import { collection, doc, setDoc, getDocs, getDoc, query, orderBy } from 'firebase/firestore';
 
-// In-memory store for invoices
-let invoices: Invoice[] = [];
-
-// Helper to convert Date objects in invoice data to strings
+// Helper to convert all Date objects in invoice data to Firestore Timestamps
 function serializeDates(data: any): any {
-  if (data instanceof Date) {
-    return data.toISOString();
-  }
-  if (Array.isArray(data)) {
-    return data.map(serializeDates);
-  }
-  if (typeof data === 'object' && data !== null) {
-    const newData: {[key: string]: any} = {};
-    for (const key in data) {
-      newData[key] = serializeDates(data[key]);
-    }
-    return newData;
-  }
-  return data;
-}
-
-// Helper to convert date strings back to Date objects
-function deserializeDates(data: any): any {
-    if (typeof data === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(data)) {
-      const date = new Date(data);
-      if (!isNaN(date.getTime())) {
-          return date;
-      }
+    if (data instanceof Date) {
+        return data; // Firestore handles Date objects automatically
     }
     if (Array.isArray(data)) {
-      return data.map(deserializeDates);
+        return data.map(serializeDates);
     }
     if (typeof data === 'object' && data !== null) {
-      const newData: {[key: string]: any} = {};
-      for (const key in data) {
-        newData[key] = deserializeDates(data[key]);
-      }
-      return newData;
+        const newData: {[key: string]: any} = {};
+        for (const key in data) {
+            newData[key] = serializeDates(data[key]);
+        }
+        return newData;
+    }
+    return data;
+}
+
+// Helper to convert Firestore Timestamps back to Date objects
+function deserializeDates(data: any): any {
+    if (data && typeof data.toMillis === 'function') { // Check for Firestore Timestamp
+        return data.toDate();
+    }
+    if (Array.isArray(data)) {
+        return data.map(deserializeDates);
+    }
+    if (typeof data === 'object' && data !== null) {
+        const newData: {[key: string]: any} = {};
+        for (const key in data) {
+            newData[key] = deserializeDates(data[key]);
+        }
+        return newData;
     }
     return data;
 }
@@ -51,25 +46,21 @@ function deserializeDates(data: any): any {
 export async function saveInvoice(invoiceData: Invoice) {
   try {
     const validatedData = InvoiceSchema.parse(invoiceData);
-    
-    // Convert dates to strings before storing
     const serializableData = serializeDates(validatedData);
     
     let docId = serializableData.id;
+    const invoicesCollection = collection(db, 'invoices');
 
     if (docId) {
       // Update existing invoice
-      const index = invoices.findIndex(inv => inv.id === docId);
-      if (index !== -1) {
-        invoices[index] = serializableData;
-      } else {
-        invoices.push(serializableData);
-      }
+      const docRef = doc(db, 'invoices', docId);
+      await setDoc(docRef, serializableData, { merge: true });
     } else {
       // Create new invoice
-      docId = randomUUID();
+      const newDocRef = doc(invoicesCollection);
+      docId = newDocRef.id;
       const newInvoice = { ...serializableData, id: docId };
-      invoices.push(newInvoice);
+      await setDoc(newDocRef, newInvoice);
     }
     
     revalidatePath('/invoices');
@@ -87,14 +78,11 @@ export async function saveInvoice(invoiceData: Invoice) {
 
 export async function getInvoices(): Promise<Invoice[]> {
   try {
-    // Sort invoices by date in descending order
-    const sortedInvoices = [...invoices].sort((a, b) => {
-        const dateA = new Date(a.invoiceMeta.invoiceDate);
-        const dateB = new Date(b.invoiceMeta.invoiceDate);
-        return dateB.getTime() - dateA.getTime();
-    });
-    // Convert date strings back to Date objects before sending to client
-    return deserializeDates(sortedInvoices);
+    const invoicesCollection = collection(db, 'invoices');
+    const q = query(invoicesCollection, orderBy('invoiceMeta.invoiceDate', 'desc'));
+    const querySnapshot = await getDocs(q);
+    const invoices = querySnapshot.docs.map(doc => deserializeDates(doc.data() as Invoice));
+    return invoices;
   } catch (error) {
     console.error('Error fetching invoices:', error);
     return [];
@@ -104,11 +92,11 @@ export async function getInvoices(): Promise<Invoice[]> {
 export async function getInvoice(id: string): Promise<Invoice | null> {
   try {
     if (id === 'new') return null;
-    const invoice = invoices.find(inv => inv.id === id);
+    const docRef = doc(db, 'invoices', id);
+    const docSnap = await getDoc(docRef);
 
-    if (invoice) {
-       // Convert date strings back to Date objects
-      return deserializeDates(invoice);
+    if (docSnap.exists()) {
+      return deserializeDates(docSnap.data() as Invoice);
     } else {
       console.log('No such document!');
       return null;
