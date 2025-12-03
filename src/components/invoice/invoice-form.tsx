@@ -99,7 +99,7 @@ export function InvoiceForm() {
                     <FormItem className="md:col-span-2 mb-4">
                       <FormLabel>Address Line 1</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., Baner" {...field} />
+                        <Input placeholder="e.g., 123 Innovation Drive" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -112,7 +112,7 @@ export function InvoiceForm() {
                     <FormItem className="mb-4">
                       <FormLabel>City</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., Pune" {...field} />
+                        <Input placeholder="e.g., Techville" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -125,7 +125,7 @@ export function InvoiceForm() {
                     <FormItem className="mb-4">
                       <FormLabel>State</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., Maharashtra" {...field} />
+                        <Input placeholder="e.g., Creativania" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -138,7 +138,7 @@ export function InvoiceForm() {
                     <FormItem className="mb-4">
                       <FormLabel>Pincode</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., 411045" {...field} />
+                        <Input placeholder="e.g., 54321" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -197,7 +197,7 @@ export function InvoiceForm() {
                       <FormLabel>Contact Person</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="e.g., Marketing Manager"
+                          placeholder="e.g., Jane Doe"
                           {...field}
                         />
                       </FormControl>
@@ -213,7 +213,7 @@ export function InvoiceForm() {
                       <FormLabel>Phone</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="e.g., +91 90000 11122"
+                          placeholder="e.g., +1 555 123 4567"
                           {...field}
                         />
                       </FormControl>
@@ -229,7 +229,7 @@ export function InvoiceForm() {
                       <FormLabel>Address</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="e.g., Hinjawadi Phase 2"
+                          placeholder="e.g., 456 Market Street"
                           {...field}
                         />
                       </FormControl>
@@ -244,7 +244,7 @@ export function InvoiceForm() {
                     <FormItem className="mb-4">
                       <FormLabel>City</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., Pune" {...field} />
+                        <Input placeholder="e.g., Metropolis" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -257,7 +257,7 @@ export function InvoiceForm() {
                     <FormItem className="mb-4">
                       <FormLabel>Pincode</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., 411057" {...field} />
+                        <Input placeholder="e.g., 12345" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -299,7 +299,7 @@ export function InvoiceForm() {
                     <FormItem className="mb-4">
                       <FormLabel>Currency Symbol</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., ₹, $" {...field} />
+                        <Input placeholder="e.g., ₹, $, €" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -363,7 +363,7 @@ export function InvoiceForm() {
                   <FormControl>
                     <Input
                       type="number"
-                      placeholder="e.g., 1000"
+                      placeholder="e.g., 100"
                       {...field}
                       onChange={(e) =>
                         field.onChange(parseFloat(e.target.value) || 0)
@@ -406,7 +406,7 @@ export function InvoiceForm() {
                       <FormLabel>Tax Label</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="e.g., GST @ 18%"
+                          placeholder="e.g., GST, VAT"
                           {...field}
                         />
                       </FormControl>
@@ -462,7 +462,7 @@ export function InvoiceForm() {
                       <FormLabel>Payment Terms</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="e.g., 50% advance..."
+                          placeholder="e.g., Net 30, 50% advance, etc."
                           {...field}
                         />
                       </FormControl>
@@ -478,7 +478,7 @@ export function InvoiceForm() {
                       <FormLabel>Bank Name</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="e.g., HDFC Bank"
+                          placeholder="e.g., Global Citizen Bank"
                           {...field}
                         />
                       </FormControl>
@@ -494,7 +494,7 @@ export function InvoiceForm() {
                       <FormLabel>Account Number</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="e.g., 501002XXXXXX"
+                          placeholder="e.g., 1234567890"
                           {...field}
                         />
                       </FormControl>
@@ -507,10 +507,10 @@ export function InvoiceForm() {
                   name="bankDetails.ifsc"
                   render={({ field }) => (
                     <FormItem className="mb-4">
-                      <FormLabel>IFSC Code</FormLabel>
+                      <FormLabel>IFSC / SWIFT Code</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="e.g., HDFC0001234"
+                          placeholder="e.g., GCBIN0012345"
                           {...field}
                         />
                       </FormControl>
@@ -526,7 +526,7 @@ export function InvoiceForm() {
                       <FormLabel>UPI ID (Optional)</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="e.g., your-upi@okhdfc"
+                          placeholder="e.g., your-upi@okbank"
                           {...field}
                         />
                       </FormControl>
@@ -555,7 +555,7 @@ export function InvoiceForm() {
                       <FormLabel>Project Timeline (Optional)</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="e.g., Design: 2-3 Days..."
+                          placeholder="e.g., Phase 1: 2 weeks, Phase 2: 3 weeks..."
                           {...field}
                         />
                       </FormControl>
@@ -571,7 +571,7 @@ export function InvoiceForm() {
                       <FormLabel>Terms & Conditions (Optional)</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="e.g., Two rounds of revisions included..."
+                          placeholder="e.g., Two rounds of revisions are included..."
                           {...field}
                         />
                       </FormControl>
@@ -603,3 +603,5 @@ export function InvoiceForm() {
     </div>
   );
 }
+
+    
