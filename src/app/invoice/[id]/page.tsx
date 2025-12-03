@@ -8,11 +8,13 @@ type Props = {
 };
 
 export default async function InvoicePage({ params }: Props) {
-  if (params.id === 'new') {
+  const { id } = params;
+
+  if (id === 'new') {
     return <InvoiceEditor initialData={defaultInvoice} />;
   }
 
-  const invoice = await getInvoice(params.id);
+  const invoice = await getInvoice(id);
 
   if (!invoice) {
     notFound();
