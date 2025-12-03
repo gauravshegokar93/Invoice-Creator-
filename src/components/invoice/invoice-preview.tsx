@@ -7,6 +7,7 @@ import { Separator } from '@/components/ui/separator';
 import { format } from 'date-fns';
 import { formatAmount } from '@/lib/utils';
 import { Globe, Mail, Phone } from 'lucide-react';
+import Image from 'next/image';
 
 type InvoicePreviewProps = {
   data: Invoice;
@@ -29,30 +30,47 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
     );
   };
 
+  const headerContent = (
+    <header className="flex justify-between items-start pb-6 border-b-2 border-gray-200">
+      <div>
+        <h1 className="text-3xl font-bold font-headline text-gray-900">{freelancer.name || 'Your Company'}</h1>
+        <p className="text-gray-600">{freelancer.addressLine1}</p>
+        <p className="text-gray-600">{freelancer.city}, {freelancer.state} {freelancer.pincode}</p>
+      </div>
+      <div className="text-right">
+        {freelancer.logoUrl ? (
+          <Image src={freelancer.logoUrl} alt="Company Logo" width={120} height={120} className="mb-4 ml-auto" style={{ maxWidth: '120px', maxHeight: '120px', objectFit: 'contain' }}/>
+        ) : (
+          <div className="w-[120px] h-[120px] bg-gray-200 mb-4 ml-auto flex items-center justify-center">
+            <span className="text-xs text-gray-500">Your Logo</span>
+          </div>
+        )}
+        <h2 className="text-2xl font-semibold text-primary uppercase tracking-wider">Invoice</h2>
+        <p className="text-gray-600"># {invoiceMeta.invoiceNumber}</p>
+        {invoiceMeta.poNumber && <p className="text-gray-600">PO: {invoiceMeta.poNumber}</p>}
+        <p className="text-gray-600">Date: {invoiceMeta.invoiceDate ? format(new Date(invoiceMeta.invoiceDate), 'PPP') : ''}</p>
+        {invoiceMeta.dueDate && <p className="text-gray-600">Due: {format(new Date(invoiceMeta.dueDate), 'PPP')}</p>}
+      </div>
+    </header>
+  );
+
   return (
     <div className="sticky top-24">
       <h2 className="font-headline text-lg mb-2 no-print">Live Preview</h2>
       <Card id="invoice-preview" className="w-full shadow-lg rounded-lg overflow-hidden">
+        <div id="pdf-header-placeholder" className="hidden print:block h-[200px]"></div>
+        <div id="pdf-header" className="print:hidden print:fixed print:top-0 print:left-0 print:right-0 print:bg-white print:px-8 print:pt-8">
+            {headerContent}
+        </div>
         <CardContent className="p-8 text-sm text-gray-800 bg-white">
-          <header className="flex justify-between items-start pb-6 border-b-2 border-gray-200">
-            <div>
-              <h1 className="text-3xl font-bold font-headline text-gray-900">{freelancer.name}</h1>
-              <p className="text-gray-600">{freelancer.addressLine1}</p>
-              <p className="text-gray-600">{freelancer.city}, {freelancer.state} {freelancer.pincode}</p>
-            </div>
-            <div className="text-right">
-              <h2 className="text-2xl font-semibold text-primary uppercase tracking-wider">Invoice</h2>
-              <p className="text-gray-600"># {invoiceMeta.invoiceNumber}</p>
-              <p className="text-gray-600">Date: {invoiceMeta.invoiceDate ? format(new Date(invoiceMeta.invoiceDate), 'PPP') : ''}</p>
-              {invoiceMeta.dueDate && <p className="text-gray-600">Due: {format(new Date(invoiceMeta.dueDate), 'PPP')}</p>}
-            </div>
-          </header>
+          
+          {headerContent}
 
           <section className="grid grid-cols-2 gap-4 my-6">
             <div>
               <h3 className="font-semibold text-gray-500 uppercase tracking-wide mb-2">Bill To</h3>
-              <p className="font-bold text-gray-800">{client.organizationName}</p>
-              <p className="text-gray-600">Attn: {client.name}</p>
+              <p className="font-bold text-gray-800">{client.organizationName || 'Client Company'}</p>
+              <p className="text-gray-600">Attn: {client.name || 'Client Name'}</p>
               <p className="text-gray-600">{client.addressLine}</p>
               <p className="text-gray-600">{client.city} - {client.pincode}</p>
               <p className="text-gray-600">Phone: {client.phone}</p>

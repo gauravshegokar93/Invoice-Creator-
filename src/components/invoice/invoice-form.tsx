@@ -23,11 +23,33 @@ import { DatePicker } from '@/components/ui/date-picker';
 import { LineItemsForm } from './line-items-form';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { ChangeEvent } from 'react';
+
+const currencies = [
+  { value: '₹', label: 'INR (₹)' },
+  { value: '$', label: 'USD ($)' },
+  { value: '€', label: 'EUR (€)' },
+  { value: '£', label: 'GBP (£)' },
+  { value: '¥', label: 'JPY (¥)' },
+];
 
 export function InvoiceForm() {
-  const { control, watch } = useFormContext<Invoice>();
+  const { control, watch, setValue } = useFormContext<Invoice>();
 
   const applyTax = watch('totals.applyTax');
+
+  const handleLogoUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setValue('freelancer.logoUrl', reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
 
   return (
     <div className="space-y-6">
@@ -60,6 +82,13 @@ export function InvoiceForm() {
                     </FormItem>
                   )}
                 />
+                <FormItem className="md:col-span-2">
+                  <FormLabel>Company Logo</FormLabel>
+                  <FormControl>
+                    <Input type="file" accept="image/*" onChange={handleLogoUpload} className="pt-2 text-sm" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
                 <FormField
                   control={control}
                   name="freelancer.email"
@@ -292,14 +321,17 @@ export function InvoiceForm() {
                     </FormItem>
                   )}
                 />
-                <FormField
+                 <FormField
                   control={control}
-                  name="invoiceMeta.currencySymbol"
+                  name="invoiceMeta.poNumber"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Currency Symbol</FormLabel>
+                      <FormLabel>PO Number (Optional)</FormLabel>
                       <FormControl>
-                        <Input placeholder="Currency Symbol" {...field} />
+                        <Input
+                          placeholder="PO Number"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -337,6 +369,30 @@ export function InvoiceForm() {
                     </FormItem>
                   )}
                 />
+                <div className="md:col-span-2 grid grid-cols-2 gap-x-4">
+                  <FormField
+                    control={control}
+                    name="invoiceMeta.currencySymbol"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Currency</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select a currency" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {currencies.map(c => (
+                              <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </CardContent>
             </Card>
           </AccordionContent>
