@@ -1,3 +1,4 @@
+
 import { z } from 'zod';
 
 export const LineItemSchema = z.object({
@@ -49,9 +50,9 @@ export const InvoiceSchema = z.object({
   }),
   totals: z.object({
     discount: z.coerce.number().min(0).default(0),
-    taxLabel: z.string().default('GST @ 18%'),
+    taxLabel: z.string().default('GST'),
     taxRate: z.coerce.number().min(0).max(100).default(18),
-    applyTax: z.boolean().default(true),
+    applyTax: z.boolean().default(false),
   }),
   projectTimeline: z.string().optional(),
   extraTerms: z.string().optional(),
@@ -62,22 +63,22 @@ export type Invoice = z.infer<typeof InvoiceSchema>;
 
 export const defaultInvoice: Invoice = {
   freelancer: {
-    name: 'CodeCraft Freelance Studio',
-    addressLine1: 'Baner',
-    city: 'Pune',
-    state: 'Maharashtra',
-    pincode: '411045',
-    phone: '+91 98765 43210',
-    email: 'hello@codecraftstudio.in',
-    website: 'https://codecraftstudio.in',
+    name: '',
+    addressLine1: '',
+    city: '',
+    state: '',
+    pincode: '',
+    phone: '',
+    email: '',
+    website: '',
   },
   client: {
-    name: 'Marketing Manager',
-    organizationName: 'BrightWave Digital Pvt. Ltd.',
-    addressLine: 'Hinjawadi Phase 2',
-    city: 'Pune',
-    pincode: '411057',
-    phone: '+91 90000 11122',
+    name: '',
+    organizationName: '',
+    addressLine: '',
+    city: '',
+    pincode: '',
+    phone: '',
   },
   invoiceMeta: {
     invoiceNumber: `INV-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 900) + 100).padStart(3, '0')}`,
@@ -85,25 +86,24 @@ export const defaultInvoice: Invoice = {
     currencySymbol: '₹',
   },
   lineItems: [
-    { description: 'Custom Landing Page Development', quantity: 1, rate: 25000, details: 'React-based SEO-friendly landing page\nIntegration with contact form and tracking pixels\nMobile-first responsive design' },
-    { description: 'API Integration & Automation', quantity: 1, rate: 12000, details: 'Integration with CRM API for lead capture\nAutomated email notification setup\nBasic error logging' },
+    { description: '', quantity: 1, rate: 0, details: '' },
   ],
   totals: {
-    discount: 1000,
-    taxLabel: 'GST @ 18%',
+    discount: 0,
+    taxLabel: 'GST',
     taxRate: 18,
-    applyTax: true,
+    applyTax: false,
   },
   paymentTerms: {
-    termsText: '50% advance to initiate work.\nRemaining 50% payable within 7 days of final delivery.',
+    termsText: '',
   },
   bankDetails: {
-    bankName: 'HDFC Bank',
-    accountNumber: '501002XXXXXX',
-    ifsc: 'HDFC0001234',
-    upiId: 'codecraft@okhdfcbank',
+    bankName: '',
+    accountNumber: '',
+    ifsc: '',
+    upiId: '',
   },
-  footerNote: 'For any questions regarding this invoice, please contact hello@codecraftstudio.in',
-  projectTimeline: "Design & Planning: 2–3 Days\nDevelopment & Testing: 4–6 Days\nDeployment: 7–10 Working Days",
-  extraTerms: "Client must provide text, logo, and images on time.\nTwo rounds of revisions are included. Extra revisions chargeable."
+  footerNote: '',
+  projectTimeline: "",
+  extraTerms: ""
 };
