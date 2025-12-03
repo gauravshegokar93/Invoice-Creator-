@@ -12,8 +12,9 @@ import { Download, Loader2, Save } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { saveInvoice } from '@/lib/actions';
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState, useTransition } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Form } from '@/components/ui/form';
+import { useDebouncedCallback } from 'use-debounce';
 
 type InvoiceEditorProps = {
   initialData: Invoice;
@@ -22,8 +23,7 @@ type InvoiceEditorProps = {
 export function InvoiceEditor({ initialData }: InvoiceEditorProps) {
   const router = useRouter();
   const { toast } = useToast();
-  const [isPending, startTransition] = useTransition();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const form = useForm<Invoice>({
     resolver: zodResolver(InvoiceSchema),
@@ -39,83 +39,102 @@ export function InvoiceEditor({ initialData }: InvoiceEditorProps) {
       0
     );
     const discount = watchedValues.totals.discount || 0;
-    const subtotalAfterDiscount = subtotal - discount;
+    const taxableAmount = Math.max(0, subtotal - discount);
     const taxAmount = watchedValues.totals.applyTax
-      ? subtotalAfterDiscount * ((watchedValues.totals.taxRate || 0) / 100)
+      ? taxableAmount * ((watchedValues.totals.taxRate || 0) / 100)
       : 0;
-    const grandTotal = subtotalAfterDiscount + taxAmount;
+    const grandTotal = taxableAmount + taxAmount;
 
     return { subtotal, taxAmount, grandTotal };
   }, [watchedValues.lineItems, watchedValues.totals]);
 
-  const handlePrint = () => {
-    window.print();
-  };
 
-  const onSubmit = (data: Invoice) => {
-    setIsSubmitting(true);
-    startTransition(async () => {
-      try {
-        const result = await saveInvoice(data);
-        if (result.success && result.id) {
-          toast({
-            title: 'Invoice Saved!',
-            description: `Invoice ${data.invoiceMeta.invoiceNumber} has been saved.`,
-          });
-          if (!data.id) {
-            router.push(`/invoice/${result.id}`);
-            router.refresh();
-          }
-        } else {
-          toast({
-            title: 'Error Saving Invoice',
-            description: result.error || 'An unknown error occurred.',
-            variant: 'destructive',
-          });
+  const debouncedSave = useDebouncedCallback(async (data: Invoice) => {
+    setIsSaving(true);
+    try {
+      const result = await saveInvoice(data);
+      if (result.success && result.id) {
+        if (!data.id) {
+          // This is a new invoice, redirect to the new URL to avoid creating duplicates
+          router.replace(`/invoice/${result.id}`);
+        } else if (data.id !== result.id) {
+           // This case handles if the initial data was for a new invoice, but it has been saved.
+           router.replace(`/invoice/${result.id}`);
         }
-      } finally {
-        setIsSubmitting(false);
+      } else {
+        toast({
+          title: 'Error Saving Invoice',
+          description: result.error || 'An unknown error occurred.',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error("Autosave failed", error);
+      toast({
+        title: 'Autosave Failed',
+        description: 'Could not save your changes.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  }, 1000);
+
+  useEffect(() => {
+    const subscription = form.watch((value, { name }) => {
+      // Only trigger save if it's not just a state update from reset
+      if (name) {
+        debouncedSave(value as Invoice);
       }
     });
-  };
-  
-  useEffect(() => {
-    if (initialData.id && form.getValues('id') !== initialData.id) {
-        form.setValue('id', initialData.id);
-    }
-  }, [initialData.id, form]);
+    return () => subscription.unsubscribe();
+  }, [form, debouncedSave]);
 
   useEffect(() => {
-    // Reset the form whenever the initial data changes, which happens on navigation.
+    // Reset form with initial data when it changes (on navigation)
     form.reset(initialData);
   }, [initialData, form]);
 
+  const handlePrint = () => {
+    window.print();
+  };
+  
+  // No-op submit handler, as saving is done via autosave
+  const onSubmit = () => {};
+
   return (
     <div className="p-4 md:p-8">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex flex-col-reverse md:flex-row md:items-center justify-between gap-4 mb-8">
-              <h1 className="text-2xl md:text-3xl font-bold font-headline">
-                {initialData.id ? 'Edit Invoice' : 'Create New Invoice'}
-              </h1>
-              <div className="flex gap-2">
-                <Button onClick={handlePrint} variant="outline" type="button">
-                  <Download className="mr-2" />
-                  Download PDF
-                </Button>
-                <Button type="submit" disabled={isPending || isSubmitting}>
-                  {isPending || isSubmitting ? <Loader2 className="mr-2 animate-spin" /> : <Save className="mr-2" />}
-                  {isPending || isSubmitting ? 'Saving...' : 'Save Invoice'}
-                </Button>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="flex flex-col-reverse md:flex-row md:items-center justify-between gap-4 mb-8">
+            <h1 className="text-2xl md:text-3xl font-bold font-headline">
+              {initialData.id ? 'Edit Invoice' : 'Create New Invoice'}
+            </h1>
+            <div className="flex items-center gap-4">
+               <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                {isSaving ? (
+                  <>
+                    <Loader2 className="animate-spin" /> Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save /> Saved
+                  </>
+                )}
               </div>
+              <Button onClick={handlePrint} variant="outline" type="button">
+                <Download className="mr-2" />
+                Download PDF
+              </Button>
             </div>
+          </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <InvoiceForm />
-              <InvoicePreview data={watchedValues} totals={calculatedTotals} />
-            </div>
-          </form>
-        </Form>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <InvoiceForm />
+            <InvoicePreview data={watchedValues} totals={calculatedTotals} />
+          </div>
+        </form>
+      </Form>
     </div>
   );
 }

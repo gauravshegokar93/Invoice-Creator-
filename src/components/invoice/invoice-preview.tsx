@@ -1,3 +1,4 @@
+
 'use client';
 
 import type { Invoice } from '@/lib/types';
@@ -5,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { format } from 'date-fns';
 import { formatAmount } from '@/lib/utils';
-import { Building, Globe, Mail, Phone } from 'lucide-react';
+import { Globe, Mail, Phone } from 'lucide-react';
 
 type InvoicePreviewProps = {
   data: Invoice;
@@ -30,7 +31,7 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
 
   return (
     <div className="sticky top-24">
-      <h2 className="font-headline text-lg mb-2">Live Preview</h2>
+      <h2 className="font-headline text-lg mb-2 no-print">Live Preview</h2>
       <Card id="invoice-preview" className="w-full shadow-lg rounded-lg overflow-hidden">
         <CardContent className="p-8 text-sm text-gray-800 bg-white">
           <header className="flex justify-between items-start pb-6 border-b-2 border-gray-200">
@@ -42,7 +43,7 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
             <div className="text-right">
               <h2 className="text-2xl font-semibold text-primary uppercase tracking-wider">Invoice</h2>
               <p className="text-gray-600"># {invoiceMeta.invoiceNumber}</p>
-              <p className="text-gray-600">Date: {format(new Date(invoiceMeta.invoiceDate), 'PPP')}</p>
+              <p className="text-gray-600">Date: {invoiceMeta.invoiceDate ? format(new Date(invoiceMeta.invoiceDate), 'PPP') : ''}</p>
               {invoiceMeta.dueDate && <p className="text-gray-600">Due: {format(new Date(invoiceMeta.dueDate), 'PPP')}</p>}
             </div>
           </header>
@@ -57,13 +58,13 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
               <p className="text-gray-600">Phone: {client.phone}</p>
             </div>
             <div className="text-right self-end">
-                <div className="flex items-center justify-end gap-3 text-gray-600"> <Mail size={14} /> {freelancer.email}</div>
-                <div className="flex items-center justify-end gap-3 text-gray-600"> <Phone size={14} /> {freelancer.phone}</div>
+                {freelancer.email && <div className="flex items-center justify-end gap-3 text-gray-600"> <Mail size={14} /> {freelancer.email}</div>}
+                {freelancer.phone && <div className="flex items-center justify-end gap-3 text-gray-600"> <Phone size={14} /> {freelancer.phone}</div>}
                 {freelancer.website && <div className="flex items-center justify-end gap-3 text-gray-600"> <Globe size={14} /> {freelancer.website}</div>}
             </div>
           </section>
 
-          <section>
+          <section className="min-h-[250px]">
             <table className="w-full text-left">
               <thead className="bg-gray-50">
                 <tr>
@@ -82,7 +83,7 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
                     </td>
                     <td className="p-3 text-center">{item.quantity}</td>
                     <td className="p-3 text-right">{formatAmount(item.rate)}</td>
-                    <td className="p-3 text-right font-medium">{formatAmount(item.quantity * item.rate)}</td>
+                    <td className="p-3 text-right font-medium">{formatAmount((item.quantity || 0) * (item.rate || 0))}</td>
                   </tr>
                 ))}
               </tbody>
@@ -100,7 +101,7 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
                 <span>- {invoiceMeta.currencySymbol} {formatAmount(data.totals.discount)}</span>
               </div>}
               {data.totals.applyTax && <div className="flex justify-between text-gray-600">
-                <span>{data.totals.taxLabel}</span>
+                <span>{data.totals.taxLabel} ({data.totals.taxRate}%)</span>
                 <span>+ {invoiceMeta.currencySymbol} {formatAmount(totals.taxAmount)}</span>
               </div>}
               <Separator />
@@ -135,7 +136,7 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
             </div>}
           </section>
 
-          {footerNote && <footer className="mt-12 pt-6 border-t-2 text-center text-gray-500 font-semibold">
+          {footerNote && <footer className="mt-12 pt-6 border-t-2 text-center text-gray-500 font-semibold absolute bottom-8 left-0 right-0">
             <p>{footerNote}</p>
           </footer>}
         </CardContent>
