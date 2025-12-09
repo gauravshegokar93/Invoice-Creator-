@@ -1,3 +1,4 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
@@ -9,7 +10,7 @@ const siteUrl = 'https://invoice-generator-free.in';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: 'Free Online Invoice Generator | Create Invoices Without Login',
-  description: 'Create professional invoices online instantly with our free invoice generator. No login required. Fast, easy, and customizable with PDF download.',
+  description: 'Create professional invoices online instantly with our free invoice generator. No login required. Fast, easy, and customizable with PDF download. Perfect for freelancers and small businesses.',
   keywords: ['free invoice generator', 'online invoice creator', 'create invoice without login', 'invoice maker free', 'invoice template online', 'instant invoice PDF', 'freelance invoice template', 'small business invoicing'],
   openGraph: {
     title: 'InvoiceFlow | The Ultimate Free Online Invoice Generator',
@@ -42,16 +43,7 @@ export default function RootLayout({
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap"
-          media="print"
-          // @ts-ignore
-          onLoad="this.media='all'"
         />
-        <noscript>
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap"
-          />
-        </noscript>
       </head>
       <body className="font-body antialiased">
         {gaId && (
@@ -86,3 +78,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+    
