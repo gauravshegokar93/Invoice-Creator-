@@ -35,7 +35,7 @@ export const InvoiceSchema = z.object({
     invoiceNumber: z.string().min(1, 'Invoice number is required.'),
     purchaseNumber: z.string().optional(),
     invoiceDate: z.date(),
-    dueDate: z.date().optional(),
+    dueDate: z.date().optional().nullable().transform(val => val === undefined ? null : val),
     currencySymbol: z.string().min(1, 'Currency is required.').default('₹'),
   }),
   lineItems: z.array(LineItemSchema).min(1, 'At least one line item is required.'),
@@ -86,6 +86,7 @@ export const defaultInvoice: Invoice = {
     purchaseNumber: '',
     invoiceDate: new Date(),
     currencySymbol: '₹',
+    dueDate: null,
   },
   lineItems: [
     { description: '', quantity: 1, rate: 0, details: '' },
