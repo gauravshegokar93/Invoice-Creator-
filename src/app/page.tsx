@@ -58,7 +58,7 @@ const schema = {
   software: {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "InvoiceFlow Free Online Invoice Generator",
+    "name": "InvoiceFlow - Free Online Invoice Generator",
     "operatingSystem": "Any (Web-based)",
     "applicationCategory": "BusinessApplication",
     "aggregateRating": {
@@ -71,8 +71,13 @@ const schema = {
       "price": "0",
       "priceCurrency": "USD"
     },
-    "description": "Create, download, and send professional invoices for free. No login required. Features PDF download, logo upload, multi-currency support, and automatic calculations.",
-    "url": "https://invoiceflow.app" // Replace with your actual domain
+    "description": "Create, download, and send professional invoices for free. No login required. Features PDF download, logo upload, multi-currency support, and automatic calculations for freelancers and small businesses.",
+    "url": "https://invoice-generator-free.in",
+    "softwareVersion": "1.0",
+    "author": {
+      "@type": "Organization",
+      "name": "InvoiceFlow"
+    }
   },
   faq: {
     "@context": "https://schema.org",
@@ -108,7 +113,7 @@ export default function HomePage() {
                 Free Online Invoice Generator
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-                Create professional invoices in seconds. No login required. The fastest way to bill your clients and get paid.
+                Create professional invoices in seconds. No login required. The fastest way to bill your clients and get paid, trusted by thousands of freelancers and small businesses worldwide.
               </p>
               <div className="flex justify-center items-center gap-4">
                 <Button asChild size="lg" className="text-lg px-8 py-6">
@@ -116,7 +121,7 @@ export default function HomePage() {
                 </Button>
               </div>
               <div className="mt-6 text-sm text-muted-foreground">
-                <p>✓ Free to use &nbsp; ✓ No signup required &nbsp; ✓ Instant PDF download</p>
+                <p>✓ 100% Free to use &nbsp; ✓ No signup required &nbsp; ✓ Instant PDF download</p>
               </div>
             </div>
           </section>
@@ -125,22 +130,22 @@ export default function HomePage() {
           <section id="how-it-works" className="py-16 md:py-24">
             <div className="container mx-auto px-4 text-center">
               <h2 className="text-3xl md:text-4xl font-headline font-bold mb-4">Invoice in 30 Seconds. It's That Simple.</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto mb-12">Follow three simple steps to create a professional, error-free invoice and get it to your client instantly.</p>
+              <p className="text-muted-foreground max-w-2xl mx-auto mb-12">Our intuitive invoice maker lets you generate a professional, error-free invoice in just three simple steps. Get it to your client instantly and get paid faster.</p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
                 <div className="flex flex-col items-center">
                   <div className="bg-primary text-primary-foreground h-16 w-16 rounded-full flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">1</div>
                   <h3 className="text-xl font-semibold mb-2">Fill in the Details</h3>
-                  <p className="text-muted-foreground">Enter your and your client’s information, add your logo, and specify the invoice number and dates.</p>
+                  <p className="text-muted-foreground">Enter your and your client’s information, upload your logo, and specify the invoice number and dates. It’s fast and straightforward.</p>
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="bg-primary text-primary-foreground h-16 w-16 rounded-full flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">2</div>
                   <h3 className="text-xl font-semibold mb-2">Add Your Services</h3>
-                  <p className="text-muted-foreground">List your services or products with quantities and rates. Let our tool automatically calculate totals, taxes, and discounts.</p>
+                  <p className="text-muted-foreground">List your services or products with quantities and rates. Let our tool automatically calculate totals, taxes, and discounts, ensuring 100% accuracy.</p>
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="bg-primary text-primary-foreground h-16 w-16 rounded-full flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">3</div>
                   <h3 className="text-xl font-semibold mb-2">Download or Send</h3>
-                  <p className="text-muted-foreground">Instantly download a professional PDF, or save the invoice to get a shareable link. No watermarks, ever.</p>
+                  <p className="text-muted-foreground">Instantly download a professional PDF, or save the invoice to get a shareable link. No watermarks, no limits, and completely free forever.</p>
                 </div>
               </div>
             </div>
@@ -151,18 +156,18 @@ export default function HomePage() {
             <div className="container mx-auto px-4 max-w-5xl">
               <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-headline font-bold">The Anatomy of a Professional Invoice</h2>
-                <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">Including the right information ensures you get paid on time and maintain clear records. Here are the essential components.</p>
+                <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">Including the right information ensures you get paid on time and maintain clear records. Our free invoice creator includes all the essential components to make you look professional.</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {[
-                  { icon: FileText, title: 'Header & Invoice Number', text: 'Clearly state "Invoice" and include a unique invoice number for tracking.' },
-                  { icon: FileText, title: 'Your Business Details', text: 'Your company name, address, and contact information.' },
-                  { icon: FileText, title: 'Client Information', text: 'The name and address of the person or company you are billing.' },
-                  { icon: FileText, title: 'Dates', text: 'The invoice issue date and the payment due date.' },
+                  { icon: FileText, title: 'Header & Invoice Number', text: 'Clearly state "Invoice" and include a unique invoice number for tracking and accounting.' },
+                  { icon: FileText, title: 'Your Business Details', text: 'Your company name, address, and contact information to establish your identity.' },
+                  { icon: FileText, title: 'Client Information', text: 'The name and address of the person or company you are billing to ensure proper delivery.' },
+                  { icon: FileText, title: 'Dates', text: 'The invoice issue date and the payment due date to set clear payment expectations.' },
                   { icon: FileText, title: 'Line Items', text: 'A detailed breakdown of services or products, including quantity, rate, and total amount for each.' },
-                  { icon: FileText, title: 'Totals & Taxes', text: 'Subtotal, discount, tax (GST/VAT), and the final grand total.' },
-                  { icon: FileText, title: 'Payment Terms', text: 'Your payment instructions, accepted methods, and late fee policies.' },
-                  { icon: FileText, title: 'Notes', text: 'A space for a personal thank you or additional project details.' },
+                  { icon: FileText, title: 'Totals & Taxes', text: 'A clear summary of the subtotal, discount, tax (like GST/VAT), and the final grand total.' },
+                  { icon: FileText, title: 'Payment Terms', text: 'Your payment instructions, accepted methods, and any late fee policies.' },
+                  { icon: FileText, title: 'Notes Section', text: 'A space for a personal thank you, project details, or other important information.' },
                 ].map(item => (
                   <div key={item.title} className="flex items-start space-x-4">
                     <item.icon className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
@@ -182,19 +187,19 @@ export default function HomePage() {
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div>
                         <h2 className="text-3xl md:text-4xl font-headline font-bold mb-4">Ditch the Templates. Save Hours.</h2>
-                        <p className="text-muted-foreground mb-6">Using Word or Excel templates feels free, but it costs you valuable time. Manual calculations lead to errors, file versions get messy, and you waste time on repetitive data entry. An online invoice generator automates the entire process.</p>
+                        <p className="text-muted-foreground mb-6">Using Word or Excel invoice templates feels free, but it costs you valuable time and introduces risk. Manual calculations lead to errors, file versions get messy, and you waste hours on repetitive data entry. Our online invoice generator automates the entire process so you can focus on your work.</p>
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3">
                                 <CheckCircle2 className="h-5 w-5 text-green-500 mt-1 flex-shrink-0"/>
-                                <span><strong className="text-foreground">Eliminate Errors:</strong> Automatic calculations for totals, taxes, and discounts mean no more costly math mistakes.</span>
+                                <span><strong className="text-foreground">Eliminate Costly Errors:</strong> Automatic calculations for totals, taxes, and discounts mean no more embarrassing math mistakes.</span>
                             </li>
                             <li className="flex items-start gap-3">
                                 <CheckCircle2 className="h-5 w-5 text-green-500 mt-1 flex-shrink-0"/>
-                                <span><strong className="text-foreground">Look Professional:</strong> Send clean, beautifully designed invoices that build client trust and reinforce your brand.</span>
+                                <span><strong className="text-foreground">Look More Professional:</strong> Send clean, beautifully designed invoices that build client trust and reinforce your brand identity.</span>
                             </li>
                              <li className="flex items-start gap-3">
                                 <CheckCircle2 className="h-5 w-5 text-green-500 mt-1 flex-shrink-0"/>
-                                <span><strong className="text-foreground">Get Paid Faster:</strong> A professional invoice with clear terms and due dates encourages prompt payment from clients.</span>
+                                <span><strong className="text-foreground">Get Paid Faster:</strong> A professional invoice with clear payment terms and an obvious due date encourages prompt payment from clients.</span>
                             </li>
                         </ul>
                         <Button asChild size="lg" className="mt-8">
@@ -205,12 +210,12 @@ export default function HomePage() {
                         <h3 className="font-bold text-lg mb-4 text-center">Templates vs. InvoiceFlow</h3>
                         <div className="flow-root">
                            <ul className="divide-y divide-gray-200">
-                                <li className="py-3"><strong className="text-red-500">Excel/Word:</strong> Manual data entry for every invoice.</li>
-                                <li className="py-3"><strong className="text-green-500">InvoiceFlow:</strong> Save clients and items to reuse instantly.</li>
-                                <li className="py-3"><strong className="text-red-500">Excel/Word:</strong> Risk of formula errors and miscalculations.</li>
-                                <li className="py-3"><strong className="text-green-500">InvoiceFlow:</strong> All totals, taxes, and discounts are auto-calculated.</li>
-                                <li className="py-3"><strong className="text-red-500">Excel/Word:</strong> Messy file management and version control.</li>
-                                <li className="py-3"><strong className="text-green-500">InvoiceFlow:</strong> All saved invoices organized in one dashboard.</li>
+                                <li className="py-3"><strong className="text-red-500">Excel/Word:</strong> Repetitive, manual data entry for every single invoice.</li>
+                                <li className="py-3"><strong className="text-green-500">InvoiceFlow:</strong> Save clients and items to reuse them instantly (optional).</li>
+                                <li className="py-3"><strong className="text-red-500">Excel/Word:</strong> High risk of formula errors and miscalculations.</li>
+                                <li className="py-3"><strong className="text-green-500">InvoiceFlow:</strong> All totals, taxes, and discounts are auto-calculated with 100% accuracy.</li>
+                                <li className="py-3"><strong className="text-red-500">Excel/Word:</strong> Messy file management, version control issues, and hard to track.</li>
+                                <li className="py-3"><strong className="text-green-500">InvoiceFlow:</strong> All saved invoices are safely organized in one dashboard.</li>
                            </ul>
                         </div>
                     </div>
@@ -224,7 +229,7 @@ export default function HomePage() {
             <div className="container mx-auto px-4 max-w-4xl">
               <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-headline font-bold">Frequently Asked Questions</h2>
-                <p className="text-muted-foreground mt-3">Everything you need to know about creating invoices with InvoiceFlow.</p>
+                <p className="text-muted-foreground mt-3">Everything you need to know about creating professional invoices with our free online tool.</p>
               </div>
               <div className="space-y-4">
                 {faqs.map((faq, index) => (

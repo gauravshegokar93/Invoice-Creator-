@@ -8,9 +8,9 @@ const siteUrl = 'https://invoice-generator-free.in';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'Free Online Invoice Generator | Create Invoices Instantly',
-  description: 'Create professional invoices for free with our online invoice generator. No login required. Instantly download, print, or send PDF invoices.',
-  keywords: ['free online invoice generator', 'invoice maker', 'create invoice online', 'invoice generator without login', 'instant invoice PDF', 'freelance invoice template', 'small business invoicing'],
+  title: 'Free Online Invoice Generator | Create Invoices Without Login',
+  description: 'Create professional invoices online instantly with our free invoice generator. No login required. Fast, easy, and customizable with PDF download.',
+  keywords: ['free invoice generator', 'online invoice creator', 'create invoice without login', 'invoice maker free', 'invoice template online', 'instant invoice PDF', 'freelance invoice template', 'small business invoicing'],
   openGraph: {
     title: 'InvoiceFlow | The Ultimate Free Online Invoice Generator',
     description: 'Create professional invoices in seconds. No signup, unlimited free invoices, and instant PDF downloads. Perfect for freelancers and small businesses.',
