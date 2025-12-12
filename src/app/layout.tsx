@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { AppHeader } from '@/components/app-header';
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const siteUrl = 'https://invoice-generator-free.in';
 
@@ -76,6 +77,7 @@ export default function RootLayout({
         </div>
         <Toaster />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
