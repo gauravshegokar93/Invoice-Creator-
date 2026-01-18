@@ -1,3 +1,4 @@
+
 import { getInvoices } from '@/lib/actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,6 +9,7 @@ import { format } from 'date-fns';
 import type { Invoice } from '@/lib/types';
 import { formatAmount } from '@/lib/utils';
 import type { Metadata } from 'next';
+import { getCurrencySymbol } from '@/lib/currencies';
 
 export const metadata: Metadata = {
   title: 'My Invoices | InvoiceFlow',
@@ -60,7 +62,7 @@ export default async function InvoicesPage() {
                       <TableCell>{invoice.client.organizationName}</TableCell>
                       <TableCell>{format(new Date(invoice.invoiceMeta.invoiceDate), 'PPP')}</TableCell>
                       <TableCell className="text-right">
-                        {invoice.invoiceMeta.currencySymbol}{' '}
+                        {getCurrencySymbol(invoice.invoiceMeta.currencyCode)}{' '}
                         {formatAmount(calculateGrandTotal(invoice))}
                       </TableCell>
                       <TableCell className="text-center">

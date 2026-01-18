@@ -12,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Loader2, PlusCircle, Sparkles, Trash2 } from 'lucide-react';
 import { getInvoiceLineItemSuggestions } from '@/ai/flows/invoice-line-item-suggestions';
+import { getCurrencySymbol } from '@/lib/currencies';
 
 export function LineItemsForm() {
   const form = useFormContext<Invoice>();
@@ -22,6 +23,9 @@ export function LineItemsForm() {
   const [suggestions, setSuggestions] = useState<number[]>([]);
   const [suggestionIndex, setSuggestionIndex] = useState<number | null>(null);
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
+  
+  const currencyCode = form.watch('invoiceMeta.currencyCode');
+  const currencySymbol = getCurrencySymbol(currencyCode);
 
   const handleGetSuggestions = async (index: number) => {
     const description = form.getValues(`lineItems.${index}.description`);
@@ -73,7 +77,7 @@ export function LineItemsForm() {
                        <p className="text-sm font-medium text-muted-foreground p-2">AI Rate Suggestions</p>
                        <div className="flex gap-2 flex-wrap">
                          {suggestions.map(rate => (
-                           <Button key={rate} variant="outline" size="sm" onClick={() => applySuggestion(rate, index)}>{form.getValues('invoiceMeta.currencySymbol')} {rate}</Button>
+                           <Button key={rate} variant="outline" size="sm" onClick={() => applySuggestion(rate, index)}>{currencySymbol} {rate}</Button>
                          ))}
                        </div>
                      </PopoverContent>

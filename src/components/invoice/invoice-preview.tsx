@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 import { formatAmount } from '@/lib/utils';
 import { Globe, Mail, Phone } from 'lucide-react';
 import Image from 'next/image';
+import { getCurrencySymbol } from '@/lib/currencies';
 
 type InvoicePreviewProps = {
   data: Invoice;
@@ -20,6 +21,7 @@ type InvoicePreviewProps = {
 
 export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
   const { freelancer, client, invoiceMeta, lineItems, paymentTerms, bankDetails, footerNote, projectTimeline, extraTerms } = data;
+  const currencySymbol = getCurrencySymbol(invoiceMeta.currencyCode);
 
   const renderTextAsList = (text: string | undefined) => {
     if (!text) return null;
@@ -101,20 +103,20 @@ export function InvoicePreview({ data, totals }: InvoicePreviewProps) {
             <div className="w-full max-w-xs space-y-2">
               <div className="flex justify-between text-gray-600">
                 <span>Subtotal</span>
-                <span>{invoiceMeta.currencySymbol} {formatAmount(totals.subtotal)}</span>
+                <span>{currencySymbol} {formatAmount(totals.subtotal)}</span>
               </div>
               {data.totals.discount > 0 && <div className="flex justify-between text-gray-600">
                 <span>Discount</span>
-                <span>- {invoiceMeta.currencySymbol} {formatAmount(data.totals.discount)}</span>
+                <span>- {currencySymbol} {formatAmount(data.totals.discount)}</span>
               </div>}
               {data.totals.applyTax && <div className="flex justify-between text-gray-600">
                 <span>{data.totals.taxLabel} ({data.totals.taxRate}%)</span>
-                <span>+ {invoiceMeta.currencySymbol} {formatAmount(totals.taxAmount)}</span>
+                <span>+ {currencySymbol} {formatAmount(totals.taxAmount)}</span>
               </div>}
               <Separator />
               <div className="flex justify-between font-bold text-lg text-primary">
                 <span>Grand Total</span>
-                <span>{invoiceMeta.currencySymbol} {formatAmount(totals.grandTotal)}</span>
+                <span>{currencySymbol} {formatAmount(totals.grandTotal)}</span>
               </div>
             </div>
           </section>

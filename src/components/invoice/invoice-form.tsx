@@ -24,14 +24,7 @@ import { LineItemsForm } from './line-items-form';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
-const currencies = [
-  { value: '₹', label: 'INR (₹)' },
-  { value: '$', label: 'USD ($)' },
-  { value: '€', label: 'EUR (€)' },
-  { value: '£', label: 'GBP (£)' },
-  { value: '¥', label: 'JPY (¥)' },
-];
+import { currencies } from '@/lib/currencies';
 
 export function InvoiceForm() {
   const { control, watch } = useFormContext<Invoice>();
@@ -352,7 +345,7 @@ export function InvoiceForm() {
                 <div className="md:col-span-2 grid grid-cols-2 gap-x-4">
                   <FormField
                     control={control}
-                    name="invoiceMeta.currencySymbol"
+                    name="invoiceMeta.currencyCode"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Currency</FormLabel>
@@ -364,7 +357,7 @@ export function InvoiceForm() {
                           </FormControl>
                           <SelectContent>
                             {currencies.map(c => (
-                              <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>
+                              <SelectItem key={c.code} value={c.code}>{c.name} ({c.symbol})</SelectItem>
                             ))}
                           </SelectContent>
                         </Select>
